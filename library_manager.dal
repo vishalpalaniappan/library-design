@@ -1,0 +1,16 @@
+design("library_manager")
+
+behavior b_getName {
+    create(name=name, type="string", role="name")
+    getInput(name, "Enter your name: ")
+    set(worldState, ["name"], name)
+    select(b_sayHi)
+}
+
+behavior b_sayHi {
+    get(name, worldState, ["name"])
+    display("f'Hello {name}'")
+    select(b_getName)
+}
+
+run(b_getName)
