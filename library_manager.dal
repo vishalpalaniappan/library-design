@@ -2,7 +2,7 @@ design("library_manager")
 
 behavior b_getName {
     create(name=name, type="string", role="name")
-    getInput(name, "Enter your name: ")
+    _getTerminalInput(name, "Enter your name: ")
     set(worldState, ["name"], name)
     select(b_sayHi)
 }
