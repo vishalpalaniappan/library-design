@@ -5,7 +5,7 @@ actor librarian {
     # This would mean that registered.py should be included in the
     # synthesized output folder. I will also use this to add an import
     # statement to the synthesized actor.
-    # include("registered.py")
+    include("registered.py")
 
     behavior createBasket {
         create(name=basket, type="list", role="basket", accepts="book")
