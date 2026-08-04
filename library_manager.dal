@@ -1,20 +1,22 @@
 design("library_manager")
 
-behavior b_getName {
-    create(name=name, type="string", role="name")
-    _getTerminalInput(name, "Enter your name: ")
-    set(worldState, ["name"], name)
-    select(b_sayHi)
-}
+actor librarian {
+    behavior b_getName {
+        create(name=name, type="string", role="name")
+        _getTerminalInput(name, "Enter your name: ")
+        set(worldState, ["name"], name)
+        select(b_sayHi)
+    }
 
-behavior b_sayHi {
-    get(name, worldState, ["name"])
-    display("f'Hello {name}'")
-    select(test)
-}
+    behavior b_sayHi {
+        get(name, worldState, ["name"])
+        display("f'Hello {name}'")
+        select(test)
+    }
 
-behavior test {
-    select(b_getName)
-}
+    behavior test {
+        select(b_getName)
+    }
 
-run(b_getName)
+    run(b_getName)
+}
