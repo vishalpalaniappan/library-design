@@ -1,6 +1,12 @@
 design("library_manager")
 
 actor librarian {
+    # Used to include files in the synthesized output
+    # This would mean that registered.py should be included in the
+    # synthesized output folder. I will also use this to add an import
+    # statement to the synthesized actor.
+    # include("registered.py")
+
     behavior b_getName {
         create(name=name, type="string", role="name")
         _getTerminalInput(name, "Enter your name: ")
