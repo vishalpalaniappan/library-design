@@ -1,5 +1,5 @@
-from WorldState import WorldState
 from registered import *
+from WorldState import WorldState
 from LoggingHelper import semanticLogger
 
 def createBasket():
@@ -35,12 +35,6 @@ def addBookChoice():
 def getBookChoice():
     worldStateManager.setBehavior('getBookChoice')
     global worldState
-    if True:
-        basket = worldStateManager.getValue('basket')
-        numBooks = getLength(basket)
-        inv_isInvalid = isEqual(numBooks, 0)
-        if inv_isInvalid:
-            semanticLogger.logInvariantViolation('getChoice', 'books_in_basket', 'getBookFromBasket')
     return 'getBookFromBasket'
 
 def getBookFromBasket():
@@ -74,11 +68,6 @@ def getName():
     worldStateManager.setBehavior('getName')
     global worldState
     name = input('\nPlease enter book name: ')
-    if True:
-        name_length = getLength(name)
-        inv_isInvalid = isEqual(name_length, 0)
-        if inv_isInvalid:
-            semanticLogger.logInvariantViolation('getName', 'name_length', 'getFirstLetterOfBookName')
     worldStateManager.add('name', name, True)
     return 'createBook'
 
@@ -109,7 +98,7 @@ def showBasket():
     print(f'Basket Contents: {basket}')
     return 'getChoice'
 if __name__ == '__main__':
-    worldStateManager = WorldState('verbose')
+    worldStateManager = WorldState('minimal')
     nextBehavior = 'createBasket'
     worldState = {}
     while nextBehavior:
