@@ -41,7 +41,8 @@ def getBookFromBasket():
     worldStateManager.setBehavior('getBookFromBasket')
     global worldState
     basket = worldStateManager.getValue('basket')
-    book = removeFromPosition(basket, 0)
+    book = getFromPosition(basket, 0)
+    removeFromPosition(basket, 0)
     worldStateManager.add('book', book, False)
     return 'getFirstLetterOfBookName'
 
