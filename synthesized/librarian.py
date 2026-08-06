@@ -1,4 +1,4 @@
-from registered import *
+from computable_units import *
 from WorldState import WorldState
 from LoggingHelper import semanticLogger
 
@@ -41,7 +41,7 @@ def getBookFromBasket():
     worldStateManager.setBehavior('getBookFromBasket')
     global worldState
     basket = worldStateManager.getValue('basket')
-    book = basket.pop(0)
+    book = removeFromPosition(basket, 0)
     worldStateManager.add('book', book, False)
     return 'getFirstLetterOfBookName'
 

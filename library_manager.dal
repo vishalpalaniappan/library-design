@@ -1,7 +1,8 @@
 design("library_manager")
 
 actor librarian {
-    include("registered.py")
+    # Only single include works right now due to bug, will fix it.
+    # include("registered.py")
     include("computable_units.py")
 
     behavior createBasket {
@@ -39,7 +40,8 @@ actor librarian {
 
     behavior getBookFromBasket {
         worldStateManager(basket, "getValue", "basket")
-        _removeFromPosition(book, basket, 0)
+        _getFromPosition(book, basket, 0)
+        _removeFromPosition(null, basket, 0)
         worldStateManager(null, "add", "book", book, False)
         select(getFirstLetterOfBookName)
     }
