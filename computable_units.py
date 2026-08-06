@@ -13,7 +13,6 @@ def removeFromPosition_invariant(list_to_modify, position):
         - position must be int
         - position must be within range
     '''
-    def invariant(list_to_modify, position):
     return (
         isinstance(list_to_modify, list)
         and isinstance(position, int)

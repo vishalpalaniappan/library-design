@@ -2,6 +2,7 @@ design("library_manager")
 
 actor librarian {
     include("registered.py")
+    include("computable_units.py")
 
     behavior createBasket {
         create(name=basket, type="list", role="basket", accepts="book")
@@ -38,7 +39,7 @@ actor librarian {
 
     behavior getBookFromBasket {
         worldStateManager(basket, "getValue", "basket")
-        removeFromPos(book, basket, 0)
+        _removeFromPosition(book, basket, 0)
         worldStateManager(null, "add", "book", book, False)
         select(getFirstLetterOfBookName)
     }
