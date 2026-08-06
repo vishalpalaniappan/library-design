@@ -62,3 +62,25 @@ def getLength_invariant(value):
         - value must have a length
     '''
     return hasattr(value, '__len__')
+
+def insertIntoList(list_to_modify, value, position):
+    '''
+        Inserts the value at the given position
+        and returns the updated list.
+    '''
+    list_to_modify.insert(position, value)
+    return list_to_modify
+
+
+def insertIntoList_invariant(list_to_modify, value, position):
+    '''
+        Invariants:
+        - list_to_modify must be list
+        - position must be int
+        - position must be within insertion range
+    '''
+    return (
+        isinstance(list_to_modify, list)
+        and isinstance(position, int)
+        and 0 <= position <= len(list_to_modify)
+    )

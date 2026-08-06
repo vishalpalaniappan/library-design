@@ -19,8 +19,8 @@ actor librarian {
 
     behavior evaluateChoice {
         worldStateManager(choice, "getValue", "choice")
-        isEqual(choice, "a", isAdd)
-        isEqual(choice, "g", isGet)
+        _isEqual(isAdd, choice, "a")
+        _isEqual(isGet, choice, "g")
         if (isAdd) {
             select(addBookChoice)
         }
@@ -47,9 +47,8 @@ actor librarian {
 
     behavior getFirstLetterOfBookName {
         worldStateManager(book, "getValue", "book")
-
         get(name, book, ["name"])
-        getFromPos(firstLetter, name, 0)
+        _getFromPosition(firstLetter, name, 0)
         display("f'Got book named {name} and it has first letter {firstLetter}'")
         worldStateManager(null, "add", "firstLetter", firstLetter, False)
         worldStateManager(null, "remove", "firstLetter")
@@ -83,7 +82,7 @@ actor librarian {
     behavior addBookToBasket {
         worldStateManager(book, "get", "book")
         worldStateManager(basket, "getValue", "basket")
-        insert(basket, [], book, 0)
+        _insertIntoList(basket, basket, book, 0)
         worldStateManager(null, "update", "basket", basket)
         worldStateManager(null, "remove", "book")
         select(showBasket)
