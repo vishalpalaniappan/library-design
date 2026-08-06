@@ -42,6 +42,23 @@ def getFromPosition_invariant(list_to_access, position):
 
 def isEqual(a, b):
     return a == b
-    
-def getLength (value):
+
+
+def isEqual_invariant(a, b):
+    '''
+        Invariants:
+        - None
+    '''
+    return True
+
+
+def getLength(value):
     return len(value)
+
+
+def getLength_invariant(value):
+    '''
+        Invariants:
+        - value must have a length
+    '''
+    return hasattr(value, '__len__')
