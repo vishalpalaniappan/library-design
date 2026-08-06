@@ -15,6 +15,13 @@ def getChoice():
     global worldState
     choice = input('\nGet user choice (a for add book, g for get book, else exit): ')
     worldStateManager.add('choice', choice, True)
+    return 'displayChoice'
+
+def displayChoice():
+    worldStateManager.setBehavior('displayChoice')
+    global worldState
+    choice = worldStateManager.getValue('choice')
+    print(f'User Choice: {choice}')
     return 'evaluateChoice'
 
 def evaluateChoice():
@@ -57,13 +64,6 @@ def getFirstLetterOfBookName():
     worldStateManager.add('firstLetter', firstLetter, False)
     worldStateManager.remove('firstLetter')
     worldStateManager.remove('book')
-    return 'getChoice'
-
-def displayChoice():
-    worldStateManager.setBehavior('displayChoice')
-    global worldState
-    choice = worldStateManager.getValue('choice')
-    print(f'User Choice: {choice}')
     return 'getChoice'
 
 def getName():
