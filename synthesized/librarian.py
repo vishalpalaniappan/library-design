@@ -21,8 +21,8 @@ def evaluateChoice():
     worldStateManager.setBehavior('evaluateChoice')
     global worldState
     choice = worldStateManager.getValue('choice')
-    isAdd = choice == 'a'
-    isGet = choice == 'g'
+    isAdd = isEqual(choice, 'a')
+    isGet = isEqual(choice, 'g')
     if isAdd:
         return 'addBookChoice'
     if isGet:
@@ -52,7 +52,7 @@ def getFirstLetterOfBookName():
     global worldState
     book = worldStateManager.getValue('book')
     name = book['name']
-    firstLetter = name[0]
+    firstLetter = getFromPosition(name, 0)
     print(f'Got book named {name} and it has first letter {firstLetter}')
     worldStateManager.add('firstLetter', firstLetter, False)
     worldStateManager.remove('firstLetter')
@@ -88,7 +88,7 @@ def addBookToBasket():
     global worldState
     book = worldStateManager.get('book')
     basket = worldStateManager.getValue('basket')
-    basket.insert(0, book)
+    basket = insertIntoList(basket, book, 0)
     worldStateManager.update('basket', basket)
     worldStateManager.remove('book')
     return 'showBasket'
