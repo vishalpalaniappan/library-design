@@ -1,4 +1,5 @@
 from computable_units import *
+from registered import *
 from WorldState import WorldState
 from LoggingHelper import semanticLogger
 
