@@ -33,14 +33,6 @@ actor librarian {
     }
 
     behavior getBookChoice {
-        invariant  {
-            worldStateManager(basket, "getValue", "basket")
-            _getLength(numBooks,  basket)
-            _isEqual(inv_isInvalid, numBooks, 0)
-            if (inv_isInvalid) {
-                log("invariantViolation", "getChoice", "books_in_basket", "getBookFromBasket")
-            }
-        }
         select(getBookFromBasket)
     }
 
@@ -72,16 +64,7 @@ actor librarian {
     behavior getName {
         create(name=name, type="string", role="name")
         getInput(name, "\nPlease enter book name: ")
-        invariant  {
-            #log("invariant", "getName", "name_length", "name", "getFirstLetterOfBookName")
-            _getLength(name_length,  name)
-            _isEqual(inv_isInvalid, name_length, 0)
-            if (inv_isInvalid) {
-                log("invariantViolation", "getName", "name_length", "getFirstLetterOfBookName")
-            }
-        }
-        worldStateManager(null, "add", "name", name, True)
-        
+        worldStateManager(null, "add", "name", name, True)        
         select(createBook)
     }
 
