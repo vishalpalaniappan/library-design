@@ -24,6 +24,7 @@ def getFromPosition(list_to_access, position):
         Gets the entry at the given position.
     '''
     return list_to_access[position]
+    
 
 
 def getFromPosition_invariant(list_to_access, position):
@@ -33,15 +34,19 @@ def getFromPosition_invariant(list_to_access, position):
         it will not be possible to know which participant 
         caused the semantically invalid state because I am evaluating
         all of them at the same time.
+        
+        The objective here is to prevent semantic invalidity, so the invariant should be placed when that can be determined
+        unambiguously.
 
         Also, for the third invariant in this list, the value of
         both position and the list participant is needed to determine
         semantic invalidity. So the invariant should be placed when
-        both of those have entered existing can cause the world to
-        enter a semantically invalid state.
+        both of those have existing can cause the world to enter a semantically invalid state.
 
         The algorithm that identifies the provenance of the participants
-        will determine where the invariants are placed.
+        will determine where the invariants are placed. For the third 
+        invariant, it will identify when the existence of both participants
+        can cause the world to enter a semantically invalid state.
     '''
     '''
         Invariants:
