@@ -1,30 +1,35 @@
 design("library_manager")
 
+#participant_type BASKET {
+#   Placeholder for participant type declaration
+#   Establish participant metadata here
+#}
+
 actor librarian {
     include("registered.py")
     include("computable_units.py")
 
     behavior createBasket {
-        create(name=basket, type="list", role="basket", accepts="book")
+        #create(name=basket, type="list", role="BOOK_BASKET", accepts="book")
         set("basket",[],[])
-        worldStateManager(null, "add", "basket", basket, False)
+        worldStateManager(null, "add", "basket", basket, "BOOK_BASKET", "BASKET", False)
         select(getChoice)
     }
 
     behavior getChoice {
         getInput(choice, "\nGet user choice (a for add book, g for get book, else exit): ")
-        worldStateManager(null, "add", "choice", choice, True)
+        worldStateManager(null, "add", "choice", choice, "USER_CHOICE", "CHOICE", True)
         select(displayChoice)
     }
 
     behavior displayChoice {
-        worldStateManager(choice, "getValue", "choice")
+        worldStateManager(choice, "getValue", "choice", "USER_CHOICE", "CHOICE")
         display("f'User Choice: {choice}'")
         select(evaluateChoice)
     }
 
     behavior evaluateChoice {
-        worldStateManager(choice, "getValue", "choice")
+        worldStateManager(choice, "getValue", "choice", "USER_CHOICE", "CHOICE")
         _isEqual(isAdd, choice, "a")
         _isEqual(isGet, choice, "g")
         if (isAdd) {
@@ -44,52 +49,52 @@ actor librarian {
     }
 
     behavior getBookFromBasket {
-        worldStateManager(basket, "getValue", "basket")
+        worldStateManager(basket, "getValue", "basket", "BOOK_BASKET", "BASKET")
         _getFromPosition(book, basket, 0)
         _removeFromPosition(null, basket, 0)
-        worldStateManager(null, "add", "book", book, False)
+        worldStateManager(null, "add", "book", book, "BOOK_ACCESSED", "BOOK", False)
         select(getFirstLetterOfBookName)
     }
 
     behavior getFirstLetterOfBookName {
-        worldStateManager(book, "getValue", "book")
+        worldStateManager(book, "getValue", "book", "BOOK_ACCESSED", "BOOK")
         get(name, book, ["name"])
         _getFromPosition(firstLetter, name, 0)
         display("f'Got book named {name} and it has first letter {firstLetter}'")
-        worldStateManager(null, "add", "firstLetter", firstLetter, False)
+        worldStateManager(null, "add", "firstLetter", firstLetter, "FIRST_LETTER_BOOK", "LETTER", False)
         worldStateManager(null, "remove", "firstLetter")
         worldStateManager(null, "remove", "book")
         select(getChoice)
     }
 
     behavior getName {
-        create(name=name, type="string", role="name")
+        #create(name=name, type="string", role="name")
         getInput(name, "\nPlease enter book name: ")
-        worldStateManager(null, "add", "name", name, True)        
+        worldStateManager(null, "add", "name", name, "BOOK_NAME", "BOOK", True)        
         select(createBook)
     }
 
     behavior createBook {
-        worldStateManager(name, "getValue", "name")
+        worldStateManager(name, "getValue", "name", "BOOK_NAME", "BOOK")
         create(name=book, type="object", role="book")
         set(book, [], {})
         set(book, ["name"], name)
-        worldStateManager(null, "add", "book", book, False)
+        worldStateManager(null, "add", "book", book, "CREATED_BOOK", "BOOK", False)
         worldStateManager(null, "remove", "name")
         select(addBookToBasket)
     }
 
     behavior addBookToBasket {
-        worldStateManager(book, "get", "book")
-        worldStateManager(basket, "getValue", "basket")
+        worldStateManager(book, "get", "book", "CREATED_BOOK", "BOOK")
+        worldStateManager(basket, "getValue", "basket", "BOOK_BASKET", "BASKET")
         _insertIntoList(basket, basket, book, 0)
-        worldStateManager(null, "update", "basket", basket)
+        worldStateManager(null, "update", "basket", basket, "BOOK_BASKET", "BASKET")
         worldStateManager(null, "remove", "book")
         select(showBasket)
     }
 
     behavior showBasket {
-        worldStateManager(basket, "getValue", "basket")
+        worldStateManager(basket, "getValue", "basket", "BOOK_BASKET", "BASKET")
         display("f'Basket Contents: {basket}'")
         select(getChoice)
     }
