@@ -3,6 +3,8 @@ design("library_manager")
 #participant_type BASKET {
 #   Placeholder for participant type declaration
 #   Establish participant metadata here
+#   This includes the domain structure of the participant
+#   that is passed to CLP.
 #}
 
 actor librarian {
