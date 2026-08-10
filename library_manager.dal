@@ -121,26 +121,50 @@ actor librarian {
             name="book",
             value=book,
             p_type="BOOK", 
-            p_role="BOOK_ACCESSED", 
+            p_role="BOOK_W_NAME", 
             is_input=False
         )
-        select(getFirstLetterOfBookName)
+        select(getBookName)
     }
 
+    #=============================
+    #      Get Book Name
+    #=============================
+    behavior getBookName {
+        worldStateManager(
+            save_in=book, 
+            transformation=getValue, 
+            name="book",
+            p_type="BOOK", 
+            p_role="BOOK_W_NAME"
+        )
+
+        get(name, book, ["name"])
+
+        worldStateManager(
+            save_in=null, 
+            transformation=add, 
+            name="name",
+            value=name,
+            p_type="NAME", 
+            p_role="BOOK_NAME", 
+            is_input=False
+        )   
+        select(getFirstLetterOfBookName)
+    }
 
     #======================================
     #      Get First Letter of Book Name
     #=====================================
     behavior getFirstLetterOfBookName {
         worldStateManager(
-            save_in=book, 
+            save_in=name, 
             transformation=getValue, 
-            name="book",
-            p_type="BOOK", 
-            p_role="BOOK_ACCESSED"
+            name="name",
+            p_type="NAME", 
+            p_role="BOOK_NAME"
         )
         
-        get(name, book, ["name"])
         _getFromPosition(firstLetter, name, 0)
         display("f'Got book named {name} and it has first letter {firstLetter}'")
         
@@ -148,7 +172,7 @@ actor librarian {
             save_in=null, 
             transformation=remove, 
             name="book"
-        )
+        )  
         select(getChoice)
     }
 
@@ -179,7 +203,7 @@ actor librarian {
             transformation=getValue, 
             name="name",
             p_type="NAME", 
-            p_role="BOOK_NAME"
+            p_role="BOOK_W_NAME"
         )
 
         set(book, [], {})
@@ -191,7 +215,7 @@ actor librarian {
             name="book",
             value=book,
             p_type="BOOK", 
-            p_role="CREATED_BOOK", 
+            p_role="BOOK_W_NAME", 
             is_input=False
         )   
         worldStateManager(
@@ -211,7 +235,7 @@ actor librarian {
             transformation=get, 
             name="book",
             p_type="BOOK", 
-            p_role="CREATED_BOOK"
+            p_role="BOOK_W_NAME"
         )
         worldStateManager(
             save_in=basket, 
