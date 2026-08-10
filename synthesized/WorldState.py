@@ -15,6 +15,7 @@ class WorldState:
 
     def __init__(self, mode):
         self.worldState = {}
+        self.behavior = None
         self.mode = mode
 
     def setBehavior(self, behaviorName):
@@ -25,7 +26,27 @@ class WorldState:
     def setFailure(self):
         semanticLogger.logFailure(self.behavior)
 
-    def add(self, name, value, inputFlag):
+    def create(self, name, value, type, role, inputFlag):
+        if "uid" in value:
+            self.worldState[name] = {
+                "value": value["value"],
+                "uid": value["uid"]
+            }
+        else:
+            self.worldState[name] = {
+                "value": value,
+                "uid": str(uuid.uuid4())
+            }
+
+        if inputFlag:
+            semanticLogger.logParticipantV2("addInput", name, self.worldState[name]["value"])
+        elif self.mode == "verbose":
+            semanticLogger.logParticipantV2("create", name, self.worldState[name]["value"])
+
+        return self.worldState[name]
+
+
+    def add(self, name, value, type, role, inputFlag):
         if "uid" in value:
             self.worldState[name] = {
                 "value": value["value"],
@@ -49,12 +70,12 @@ class WorldState:
             semanticLogger.logParticipantV2("remove", name, None)
         del self.worldState[name]
 
-    def get(self, name):
+    def get(self, name, type, role):
         if self.mode == "verbose":
             semanticLogger.logParticipantV2("get", name, None)
         return self.worldState[name]
 
-    def getValue(self, name):
+    def getValue(self, name, type, role):
         if self.mode == "verbose":
             semanticLogger.logParticipantV2("getValue", name, None)
         return self.worldState[name]["value"]
@@ -62,10 +83,7 @@ class WorldState:
     def getUid(self, name):
         return self.worldState[name]["uid"]
 
-    def update(self, name, value):
+    def update(self, name, value, type, role):
+        self.worldState[name]["value"] = value
         if self.mode == "verbose":
             semanticLogger.logParticipantV2("update", name, self.worldState[name]["value"])
-        self.worldState[name]["value"] = value
-
-    def log(self, name):
-        semanticLogger.logParticipant(None, name, None, self.worldState[name])
