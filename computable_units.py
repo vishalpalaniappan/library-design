@@ -29,24 +29,30 @@ def getFromPosition(list_to_access, position):
 
 def getFromPosition_invariant(list_to_access, position):
     '''
-        TODO: Update invariants so that the invariant that
-        is evaluated is for the chosen participant. Currently,
-        it will not be possible to know which participant 
-        caused the semantically invalid state because I am evaluating
-        all of them at the same time.
+        TODO: Update invariants so that the invariant that is evaluated
+        is for the chosen participant. Currently, it will not be possible
+        to know which participant  caused the semantically invalid state
+        because I am evaluating all of them at the same time and it is not
+        valid to place them all at the same place.
         
-        The objective here is to prevent semantic invalidity, so the invariant should be placed when that can be determined
-        unambiguously.
+        The objective here is to prevent semantic invalidity, so the invariant
+        should be placed when that can be determined unambiguously.
 
         Also, for the third invariant in this list, the value of
         both position and the list participant is needed to determine
         semantic invalidity. So the invariant should be placed when
-        both of those have existing can cause the world to enter a semantically invalid state.
+        both of those have existing can cause the world to enter a semantically
+        invalid state.
 
         The algorithm that identifies the provenance of the participants
         will determine where the invariants are placed. For the third 
         invariant, it will identify when the existence of both participants
         can cause the world to enter a semantically invalid state.
+
+        Through elimination of ambiguity in the DAL, the provenance of the participant
+        can be simply observed instead of analysing the design. As a principle, in this
+        framework, "complex" analysis implies there is ambiguity, it is more appropriate
+        to think about how elimiantion of ambiguity can be achieved using the DAL.
     '''
     '''
         Invariants:
