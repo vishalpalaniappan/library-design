@@ -18,7 +18,7 @@ actor librarian {
         set("basket",[],[])
         worldStateManager(
             save_in=null, 
-            transformation=add, 
+            transformation=create, 
             name="basket",
             value=basket,
             p_type="BASKET", 
@@ -35,7 +35,7 @@ actor librarian {
         getInput(choice, "\nGet user choice (a for add book, g for get book, else exit): ")
         worldStateManager(
             save_in=null, 
-            transformation=add, 
+            transformation=create, 
             name="choice",
             value=choice, 
             p_type="CHOICE", 
@@ -184,7 +184,7 @@ actor librarian {
         
         worldStateManager(
             save_in=null, 
-            transformation=add, 
+            transformation=create, 
             name="name",
             value=name,
             p_type="NAME", 
@@ -211,7 +211,7 @@ actor librarian {
 
         worldStateManager(
             save_in=null, 
-            transformation=add, 
+            transformation=create, 
             name="book",
             value=book,
             p_type="BOOK", 
