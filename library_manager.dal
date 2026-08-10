@@ -11,27 +11,68 @@ actor librarian {
     include("registered.py")
     include("computable_units.py")
 
+    #=============================
+    #      Create Basket
+    #=============================
     behavior createBasket {
-        #create(name=basket, type="list", role="BOOK_BASKET", accepts="book")
         set("basket",[],[])
-        worldStateManager(null, "add", "basket", basket, "BOOK_BASKET", "BASKET", False)
+        worldStateManager(
+            save_in=null, 
+            transformation=add, 
+            name="basket",
+            value=basket,
+            p_type="BASKET", 
+            p_role="BOOK_BASKET", 
+            is_input=False
+        )
         select(getChoice)
     }
 
+    #=============================
+    #      Get Choice
+    #=============================
     behavior getChoice {
         getInput(choice, "\nGet user choice (a for add book, g for get book, else exit): ")
-        worldStateManager(null, "add", "choice", choice, "USER_CHOICE", "CHOICE", True)
+        worldStateManager(
+            save_in=null, 
+            transformation=add, 
+            name="choice",
+            value=choice, 
+            p_type="CHOICE", 
+            p_role="USER_CHOICE", 
+            is_input=True
+        )
         select(displayChoice)
     }
 
+
+    #=============================
+    #      Display Choice
+    #=============================
     behavior displayChoice {
-        worldStateManager(choice, "getValue", "choice", "USER_CHOICE", "CHOICE")
+        worldStateManager(
+            save_in=choice, 
+            transformation=getValue, 
+            name="choice",
+            p_type="CHOICE", 
+            p_role="USER_CHOICE"
+        )
         display("f'User Choice: {choice}'")
         select(evaluateChoice)
     }
 
+
+    #=============================
+    #      Evaluate Choice
+    #=============================
     behavior evaluateChoice {
-        worldStateManager(choice, "getValue", "choice", "USER_CHOICE", "CHOICE")
+        worldStateManager(
+            save_in=choice, 
+            transformation=getValue, 
+            name="choice",
+            p_type="CHOICE", 
+            p_role="USER_CHOICE"
+        )
         _isEqual(isAdd, choice, "a")
         _isEqual(isGet, choice, "g")
         if (isAdd) {
@@ -42,61 +83,173 @@ actor librarian {
         }
     }
 
+
+    #=============================
+    #      Add Book Choice
+    #=============================
     behavior addBookChoice {
         select(getName)
     }
 
+
+    #=============================
+    #      Get Book Choice
+    #=============================
     behavior getBookChoice {
         select(getBookFromBasket)
     }
 
+
+    #=============================
+    #      Get Book From Basket
+    #=============================
     behavior getBookFromBasket {
-        worldStateManager(basket, "getValue", "basket", "BOOK_BASKET", "BASKET")
+        worldStateManager(
+            save_in=basket, 
+            transformation=getValue, 
+            name="basket",
+            p_type="BASKET", 
+            p_role="BOOK_BASKET"
+        )
+
         _getFromPosition(book, basket, 0)
         _removeFromPosition(null, basket, 0)
-        worldStateManager(null, "add", "book", book, "BOOK_ACCESSED", "BOOK", False)
+
+        worldStateManager(
+            save_in=null, 
+            transformation=add, 
+            name="book",
+            value=book,
+            p_type="BOOK", 
+            p_role="BOOK_ACCESSED", 
+            is_input=False
+        )
         select(getFirstLetterOfBookName)
     }
 
+
+    #======================================
+    #      Get First Letter of Book Name
+    #=====================================
     behavior getFirstLetterOfBookName {
-        worldStateManager(book, "getValue", "book", "BOOK_ACCESSED", "BOOK")
+        worldStateManager(
+            save_in=book, 
+            transformation=getValue, 
+            name="book",
+            p_type="BOOK", 
+            p_role="BOOK_ACCESSED"
+        )
+        
         get(name, book, ["name"])
         _getFromPosition(firstLetter, name, 0)
         display("f'Got book named {name} and it has first letter {firstLetter}'")
-        worldStateManager(null, "add", "firstLetter", firstLetter, "FIRST_LETTER_BOOK", "LETTER", False)
-        worldStateManager(null, "remove", "firstLetter")
-        worldStateManager(null, "remove", "book")
+        
+        worldStateManager(
+            save_in=null, 
+            transformation=remove, 
+            name="book"
+        )
         select(getChoice)
     }
 
+    #=============================
+    #      Get Book From Basket
+    #=============================
     behavior getName {
-        #create(name=name, type="string", role="name")
         getInput(name, "\nPlease enter book name: ")
-        worldStateManager(null, "add", "name", name, "BOOK_NAME", "BOOK", True)        
+        
+        worldStateManager(
+            save_in=null, 
+            transformation=add, 
+            name="name",
+            value=name,
+            p_type="NAME", 
+            p_role="BOOK_NAME", 
+            is_input=True
+        )   
         select(createBook)
     }
 
+    #=============================
+    #     Create Book
+    #=============================
     behavior createBook {
-        worldStateManager(name, "getValue", "name", "BOOK_NAME", "BOOK")
-        create(name=book, type="object", role="book")
+        worldStateManager(
+            save_in=name, 
+            transformation=getValue, 
+            name="name",
+            p_type="NAME", 
+            p_role="BOOK_NAME"
+        )
+
         set(book, [], {})
         set(book, ["name"], name)
-        worldStateManager(null, "add", "book", book, "CREATED_BOOK", "BOOK", False)
-        worldStateManager(null, "remove", "name")
+
+        worldStateManager(
+            save_in=null, 
+            transformation=add, 
+            name="book",
+            value=book,
+            p_type="BOOK", 
+            p_role="CREATED_BOOK", 
+            is_input=False
+        )   
+        worldStateManager(
+            save_in=null, 
+            transformation=remove, 
+            name="name"
+        )
         select(addBookToBasket)
     }
 
+    #=============================
+    #      Add Book To Basket
+    #=============================
     behavior addBookToBasket {
-        worldStateManager(book, "get", "book", "CREATED_BOOK", "BOOK")
-        worldStateManager(basket, "getValue", "basket", "BOOK_BASKET", "BASKET")
+        worldStateManager(
+            save_in=book, 
+            transformation=get, 
+            name="book",
+            p_type="BOOK", 
+            p_role="CREATED_BOOK"
+        )
+        worldStateManager(
+            save_in=basket, 
+            transformation=getValue, 
+            name="basket",
+            p_type="BASKET", 
+            p_role="BOOK_BASKET"
+        )
+
         _insertIntoList(basket, basket, book, 0)
-        worldStateManager(null, "update", "basket", basket, "BOOK_BASKET", "BASKET")
-        worldStateManager(null, "remove", "book")
+
+        worldStateManager(
+            save_in=null, 
+            transformation=update, 
+            name="basket",
+            value=basket,
+            p_type="BASKET", 
+            p_role="BOOK_BASKET"
+        )   
+        worldStateManager(
+            save_in=null, 
+            transformation=remove, 
+            name="book"
+        )
         select(showBasket)
     }
 
+    #=============================
+    #      Show Basket
+    #=============================
     behavior showBasket {
-        worldStateManager(basket, "getValue", "basket", "BOOK_BASKET", "BASKET")
+        worldStateManager(
+            save_in=basket, 
+            transformation=getValue, 
+            name="basket",
+            p_type="BASKET", 
+            p_role="BOOK_BASKET"
+        )
         display("f'Basket Contents: {basket}'")
         select(getChoice)
     }
