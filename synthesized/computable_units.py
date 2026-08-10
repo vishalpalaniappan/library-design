@@ -51,7 +51,7 @@ def getFromPosition_invariant(list_to_access, position):
 
         Through elimination of ambiguity in the DAL, the provenance of the participant
         can be simply observed instead of analysing the design. As a principle, in this
-        framework, rather than implementing complex analysis, it is more appropriate
+        framework, "complex" analysis implies there is ambiguity, it is more appropriate
         to think about how elimiantion of ambiguity can be achieved using the DAL.
     '''
     '''

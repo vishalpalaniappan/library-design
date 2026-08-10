@@ -7,6 +7,10 @@ def createBasket():
     worldStateManager.setBehavior('createBasket')
     global worldState
     if True:
+        print(f'Invariant for transformation _insertIntoList in behavior addBookToBasket')
+    if True:
+        print(f'Invariant for transformation _removeFromPosition in behavior getBookFromBasket')
+    if True:
         print(f'Invariant for transformation _getFromPosition in behavior getBookFromBasket')
     basket = []
     worldStateManager.create('basket', basket, 'BASKET', 'BOOK_BASKET', False)
@@ -15,6 +19,8 @@ def createBasket():
 def getChoice():
     worldStateManager.setBehavior('getChoice')
     global worldState
+    if True:
+        print(f'Invariant for transformation _isEqual in behavior evaluateChoice')
     if True:
         print(f'Invariant for transformation _isEqual in behavior evaluateChoice')
     choice = input('\nGet user choice (a for add book, g for get book, else exit): ')
