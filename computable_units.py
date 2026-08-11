@@ -1,95 +1,86 @@
+#==================================
+#   Remove From Position
+#==================================
 def removeFromPosition(list_to_modify, position):
     '''
-        Removes the entry at the given position
-        and returns the updated list.
+        Remove entry at position and return updated list.
     '''
     list_to_modify.pop(position)
     return list_to_modify
 
-def removeFromPosition_invariant(list_to_modify, position):
+def removeFromPosition_invariant_1(list_to_modify):
     '''
-        Invariants:
-        - list_to_modify must be list
-        - position must be int
-        - position must be within range
+        list_to_modify must be list
     '''
-    return (
-        isinstance(list_to_modify, list)
-        and isinstance(position, int)
-        and 0 <= position < len(list_to_modify)
-    )
+    return isinstance(list_to_modify, list)
 
+def removeFromPosition_invariant_2( position):
+    '''
+        position must be int
+    '''
+    return isinstance(position, int)
+
+def removeFromPosition_invariant_1_2(list_to_modify, position):
+    '''
+        position must be within range
+    '''
+    return 0 <= position < len(list_to_modify)
+
+#==================================
+#   Remove From Position
+#==================================
 def getFromPosition(list_to_access, position):
     '''
         Gets the entry at the given position.
     '''
     return list_to_access[position]
-    
 
-
-def getFromPosition_invariant(list_to_access, position):
+def getFromPosition_invariant_1(list_to_access):
     '''
-        TODO: Update invariants so that the invariant that is evaluated
-        is for the chosen participant. Currently, it will not be possible
-        to know which participant  caused the semantically invalid state
-        because I am evaluating all of them at the same time and it is not
-        valid to place them all at the same place.
-        
-        The objective here is to prevent semantic invalidity, so the invariant
-        should be placed when that can be determined unambiguously.
-
-        Also, for the third invariant in this list, the value of
-        both position and the list participant is needed to determine
-        semantic invalidity. So the invariant should be placed when
-        both of those have existing can cause the world to enter a semantically
-        invalid state.
-
-        The algorithm that identifies the provenance of the participants
-        will determine where the invariants are placed. For the third 
-        invariant, it will identify when the existence of both participants
-        can cause the world to enter a semantically invalid state.
-
-        Through elimination of ambiguity in the DAL, the provenance of the participant
-        can be simply observed instead of analysing the design. As a principle, in this
-        framework, "complex" analysis implies there is ambiguity, it is more appropriate
-        to think about how elimiantion of ambiguity can be achieved using the DAL.
+        list_to_access must be list
     '''
-    '''
-        Invariants:
-        - list_to_access must be list
-        - position must be int
-        - position must be within range
-    '''
-    return (
-        isinstance(list_to_access, list)
-        and isinstance(position, int)
-        and 0 <= position < len(list_to_access)
-    )
+    return hasattr(list_to_access, "__len__")
 
+def getFromPosition_invariant_2(position):
+    '''
+        position must be int
+    '''
+    return isinstance(position, int)
 
+def getFromPosition_invariant_1_2(position, list_to_access):
+    '''
+        position must be within range
+    '''
+    return 0 <= position < len(list_to_access)
+
+#==================================
+#   Is Equal
+#==================================
 def isEqual(a, b):
     return a == b
 
-
-def isEqual_invariant(a, b):
-    '''
-        Invariants:
-        - None
-    '''
+def isEqual_invariant_1(a):
     return True
 
+def isEqual_invariant_2(b):
+    return True
 
+#==================================
+#   Get Length
+#==================================
 def getLength(value):
     return len(value)
 
-
-def getLength_invariant(value):
+def getLength_invariant_1(value):
     '''
         Invariants:
         - value must have a length
     '''
     return hasattr(value, '__len__')
 
+#==================================
+#   Insert Into List
+#==================================
 def insertIntoList(list_to_modify, value, position):
     '''
         Inserts the value at the given position
@@ -98,16 +89,20 @@ def insertIntoList(list_to_modify, value, position):
     list_to_modify.insert(position, value)
     return list_to_modify
 
+def insertIntoList_invariant_1(list_to_modify):
+    '''
+        list_to_modify must be list
+    '''
+    return hasattr(list_to_modify, "__len__")
 
-def insertIntoList_invariant(list_to_modify, value, position):
+def insertIntoList_invariant_2(position):
     '''
-        Invariants:
-        - list_to_modify must be list
-        - position must be int
-        - position must be within insertion range
+        position must be int
     '''
-    return (
-        isinstance(list_to_modify, list)
-        and isinstance(position, int)
-        and 0 <= position <= len(list_to_modify)
-    )
+    return isinstance(position, int)
+
+def insertIntoList_invariant_1_2(list_to_modify, position):
+    '''
+        position must be within insertion range
+    '''
+    return 0 <= position <= len(list_to_modify)
