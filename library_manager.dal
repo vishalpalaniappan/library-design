@@ -206,7 +206,7 @@ actor librarian {
             p_role="BOOK_W_NAME"
         )
 
-        get(name, book, ["name"])
+        _getNestedValue(name, book, ["name"])
 
         worldStateManager(
             save_in=null, 

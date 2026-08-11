@@ -101,6 +101,37 @@ def insertIntoList_invariant_1_2(list_to_modify, position):
     '''
     return not (0 <= position <= len(list_to_modify))
 
+#=====================================
+#      Get Value From Object
+#=====================================
+def getNestedValue(obj, keys):
+    '''
+        Returns value that given keys.
+    '''
+    value = obj
+
+    for key in keys:
+        value = value[key]
+
+    return value
+
+
+def getNestedValue_invariant_1(obj):
+    '''
+        obj must support keyed/indexed access
+    '''
+    return isinstance(obj, (dict, list, tuple, str))
+
+
+def getNestedValue_invariant_2(keys):
+    '''
+        keys must be a list/tuple of valid key/index types
+    '''
+    return (
+        isinstance(keys, (list, tuple))
+        and all(isinstance(key, (str, int)) for key in keys)
+    )
+
 
 #=====================================
 #      Convert String To Number
