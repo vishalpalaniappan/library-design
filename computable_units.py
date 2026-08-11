@@ -100,3 +100,10 @@ def insertIntoList_invariant_1_2(list_to_modify, position):
         position must be within insertion range
     '''
     return not (0 <= position <= len(list_to_modify))
+
+
+#=====================================
+#      Convert String To Number
+#=====================================
+def convertStrToNumber(strValue):
+    return int(strValue)

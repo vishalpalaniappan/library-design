@@ -107,6 +107,52 @@ actor librarian {
     #=============================
     behavior getBookChoice {
         select{
+            goToBehavior(getPosition)
+        }
+    }
+
+    #=============================
+    #      Get Position
+    #=============================
+    behavior getPosition {
+        getInput(position, "\nPlease enter position to get from basket: ")
+        
+        worldStateManager(
+            save_in=null, 
+            transformation=create, 
+            name="position",
+            value=position,
+            p_type="POSITION", 
+            p_role="BASKET_POSITION", 
+            is_input=True
+        )   
+        select{
+            goToBehavior(convertToNumber)
+        }
+    }
+    
+    #=============================
+    #      Convert To Number
+    #=============================
+    behavior convertToNumber {
+        worldStateManager(
+            save_in=position, 
+            transformation=getValue, 
+            name="position",
+            p_type="POSITION", 
+            p_role="BASKET_POSITION"
+        )
+        _convertStrToNumber(position, position)
+
+        worldStateManager(
+            save_in=null, 
+            transformation=update, 
+            name="position",
+            value=position,
+            p_type="POSITION", 
+            p_role="BASKET_POSITION"
+        )   
+        select{
             goToBehavior(getBookFromBasket)
         }
     }
@@ -123,9 +169,16 @@ actor librarian {
             p_type="BASKET", 
             p_role="BOOK_BASKET"
         )
+        worldStateManager(
+            save_in=position, 
+            transformation=getValue, 
+            name="position",
+            p_type="POSITION", 
+            p_role="BASKET_POSITION"
+        )
 
-        _getFromPosition(book, basket, 0)
-        _removeFromPosition(null, basket, 0)
+        _getFromPosition(book, basket, position)
+        _removeFromPosition(null, basket, position)
 
         worldStateManager(
             save_in=null, 
