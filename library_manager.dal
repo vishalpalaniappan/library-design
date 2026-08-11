@@ -267,7 +267,7 @@ actor librarian {
             p_role="BOOK_BASKET"
         )
 
-        _insertIntoList(basket, basket, book, 0)
+        _insertIntoList(basket, basket, 0, book)
 
         worldStateManager(
             save_in=null, 
