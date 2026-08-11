@@ -12,19 +12,19 @@ def removeFromPosition_invariant_1(list_to_modify):
     '''
         list_to_modify must be list
     '''
-    return isinstance(list_to_modify, list)
+    return not isinstance(list_to_modify, list)
 
 def removeFromPosition_invariant_2( position):
     '''
         position must be int
     '''
-    return isinstance(position, int)
+    return not isinstance(position, int)
 
 def removeFromPosition_invariant_1_2(list_to_modify, position):
     '''
         position must be within range
     '''
-    return 0 <= position < len(list_to_modify)
+    return not (0 <= position < len(list_to_modify))
 
 #==================================
 #   Remove From Position
@@ -39,31 +39,25 @@ def getFromPosition_invariant_1(list_to_access):
     '''
         list_to_access must be list
     '''
-    return hasattr(list_to_access, "__len__")
+    return not hasattr(list_to_access, "__len__")
 
 def getFromPosition_invariant_2(position):
     '''
         position must be int
     '''
-    return isinstance(position, int)
+    return not isinstance(position, int)
 
 def getFromPosition_invariant_1_2(position, list_to_access):
     '''
         position must be within range
     '''
-    return 0 <= position < len(list_to_access)
+    return not (0 <= position < len(list_to_access))
 
 #==================================
 #   Is Equal
 #==================================
 def isEqual(a, b):
     return a == b
-
-def isEqual_invariant_1(a):
-    return True
-
-def isEqual_invariant_2(b):
-    return True
 
 #==================================
 #   Get Length
@@ -76,7 +70,7 @@ def getLength_invariant_1(value):
         Invariants:
         - value must have a length
     '''
-    return hasattr(value, '__len__')
+    return not hasattr(value, '__len__')
 
 #==================================
 #   Insert Into List
@@ -93,16 +87,16 @@ def insertIntoList_invariant_1(list_to_modify):
     '''
         list_to_modify must be list
     '''
-    return hasattr(list_to_modify, "__len__")
+    return not hasattr(list_to_modify, "__len__")
 
 def insertIntoList_invariant_2(position):
     '''
         position must be int
     '''
-    return isinstance(position, int)
+    return not isinstance(position, int)
 
 def insertIntoList_invariant_1_2(list_to_modify, position):
     '''
         position must be within insertion range
     '''
-    return 0 <= position <= len(list_to_modify)
+    return not (0 <= position <= len(list_to_modify))
