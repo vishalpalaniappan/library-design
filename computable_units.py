@@ -120,14 +120,14 @@ def getNestedValue_invariant_1(obj):
     '''
         obj must support keyed/indexed access
     '''
-    return isinstance(obj, (dict, list, tuple, str))
+    return not isinstance(obj, (dict, list, tuple, str))
 
 
 def getNestedValue_invariant_2(keys):
     '''
         keys must be a list/tuple of valid key/index types
     '''
-    return (
+    return not (
         isinstance(keys, (list, tuple))
         and all(isinstance(key, (str, int)) for key in keys)
     )
