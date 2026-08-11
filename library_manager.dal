@@ -25,7 +25,9 @@ actor librarian {
             p_role="BOOK_BASKET", 
             is_input=False
         )
-        select(getChoice)
+        select{
+            goToBehavior(getChoice)   
+        }
     }
 
     #=============================
@@ -42,7 +44,9 @@ actor librarian {
             p_role="USER_CHOICE", 
             is_input=True
         )
-        select(displayChoice)
+        select{
+            goToBehavior(displayChoice)   
+        }
     }
 
 
@@ -58,7 +62,9 @@ actor librarian {
             p_role="USER_CHOICE"
         )
         display("f'User Choice: {choice}'")
-        select(evaluateChoice)
+        select{
+            goToBehavior(evaluateChoice)   
+        }
     }
 
 
@@ -75,11 +81,13 @@ actor librarian {
         )
         _isEqual(isAdd, choice, "a")
         _isEqual(isGet, choice, "g")
-        if (isAdd) {
-            select(addBookChoice)
-        }
-        if (isGet) {
-            select(getBookChoice)
+        select{
+            if (isAdd) {
+                goToBehavior(addBookChoice)
+            }
+            if (isGet) {
+                goToBehavior(getBookChoice)
+            }
         }
     }
 
@@ -88,7 +96,9 @@ actor librarian {
     #      Add Book Choice
     #=============================
     behavior addBookChoice {
-        select(getName)
+        select{
+            goToBehavior(getName)
+        }
     }
 
 
@@ -96,7 +106,9 @@ actor librarian {
     #      Get Book Choice
     #=============================
     behavior getBookChoice {
-        select(getBookFromBasket)
+        select{
+            goToBehavior(getBookFromBasket)
+        }
     }
 
 
@@ -124,7 +136,9 @@ actor librarian {
             p_role="BOOK_W_NAME", 
             is_input=False
         )
-        select(getBookName)
+        select{
+            goToBehavior(getBookName)
+        }
     }
 
     #=============================
@@ -150,7 +164,9 @@ actor librarian {
             p_role="BOOK_NAME", 
             is_input=False
         )   
-        select(getFirstLetterOfBookName)
+        select{
+            goToBehavior(getFirstLetterOfBookName)
+        }
     }
 
     #======================================
@@ -173,7 +189,9 @@ actor librarian {
             transformation=remove, 
             name="book"
         )  
-        select(getChoice)
+        select{
+            goToBehavior(getChoice)
+        }
     }
 
     #=============================
@@ -191,7 +209,9 @@ actor librarian {
             p_role="BOOK_NAME", 
             is_input=True
         )   
-        select(createBook)
+        select{
+            goToBehavior(createBook)
+        }
     }
 
     #=============================
@@ -223,7 +243,9 @@ actor librarian {
             transformation=remove, 
             name="name"
         )
-        select(addBookToBasket)
+        select{
+            goToBehavior(addBookToBasket)
+        }
     }
 
     #=============================
@@ -260,7 +282,9 @@ actor librarian {
             transformation=remove, 
             name="book"
         )
-        select(showBasket)
+        select{
+            goToBehavior(showBasket)
+        }
     }
 
     #=============================
@@ -275,7 +299,9 @@ actor librarian {
             p_role="BOOK_BASKET"
         )
         display("f'Basket Contents: {basket}'")
-        select(getChoice)
+        select{
+            goToBehavior(getChoice)
+        }
     }
 
     run(createBasket)
