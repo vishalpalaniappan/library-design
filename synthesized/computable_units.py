@@ -81,7 +81,7 @@ def getLength_invariant_1(value):
 #==================================
 #   Insert Into List
 #==================================
-def insertIntoList(list_to_modify, value, position):
+def insertIntoList(list_to_modify, position, value):
     '''
         Inserts the value at the given position
         and returns the updated list.

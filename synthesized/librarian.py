@@ -8,15 +8,15 @@ def createBasket():
     basket = []
     worldStateManager.create('basket', basket, 'BASKET', 'BOOK_BASKET', False)
     basket = worldStateManager.getValue('basket', '', '')
-    inv_result = getFromPosition_invariant_1(basket)
+    inv_result = callIfExist('getFromPosition_invariant_1', basket)
     print(f'Invariant (pos 1 for basket in transformation_getFromPosition in behaviorgetBookFromBasket')
     print(f'Result (false is inv violation): {inv_result}')
     basket = worldStateManager.getValue('basket', '', '')
-    inv_result = removeFromPosition_invariant_1(basket)
+    inv_result = callIfExist('removeFromPosition_invariant_1', basket)
     print(f'Invariant (pos 1 for basket in transformation_removeFromPosition in behaviorgetBookFromBasket')
     print(f'Result (false is inv violation): {inv_result}')
     basket = worldStateManager.getValue('basket', '', '')
-    inv_result = insertIntoList_invariant_1(basket)
+    inv_result = callIfExist('insertIntoList_invariant_1', basket)
     print(f'Invariant (pos 1 for basket in transformation_insertIntoList in behavioraddBookToBasket')
     print(f'Result (false is inv violation): {inv_result}')
     return 'getChoice'
@@ -26,11 +26,11 @@ def getChoice():
     choice = input('\nGet user choice (a for add book, g for get book, else exit): ')
     worldStateManager.create('choice', choice, 'CHOICE', 'USER_CHOICE', True)
     choice = worldStateManager.getValue('choice', '', '')
-    inv_result = isEqual_invariant_1(choice)
+    inv_result = callIfExist('isEqual_invariant_1', choice)
     print(f'Invariant (pos 1 for choice in transformation_isEqual in behaviorevaluateChoice')
     print(f'Result (false is inv violation): {inv_result}')
     choice = worldStateManager.getValue('choice', '', '')
-    inv_result = isEqual_invariant_1(choice)
+    inv_result = callIfExist('isEqual_invariant_1', choice)
     print(f'Invariant (pos 1 for choice in transformation_isEqual in behaviorevaluateChoice')
     print(f'Result (false is inv violation): {inv_result}')
     return 'displayChoice'
@@ -87,7 +87,7 @@ def getName():
     name = input('\nPlease enter book name: ')
     worldStateManager.create('name', name, 'NAME', 'BOOK_NAME', True)
     name = worldStateManager.getValue('name', '', '')
-    inv_result = getFromPosition_invariant_1(name)
+    inv_result = callIfExist('getFromPosition_invariant_1', name)
     print(f'Invariant (pos 1 for name in transformation_getFromPosition in behaviorgetFirstLetterOfBookName')
     print(f'Result (false is inv violation): {inv_result}')
     return 'createBook'
@@ -100,8 +100,8 @@ def createBook():
     worldStateManager.create('book', book, 'BOOK', 'BOOK_W_NAME', False)
     worldStateManager.remove('name')
     book = worldStateManager.getValue('book', '', '')
-    inv_result = insertIntoList_invariant_2(book)
-    print(f'Invariant (pos 2 for book in transformation_insertIntoList in behavioraddBookToBasket')
+    inv_result = callIfExist('insertIntoList_invariant_3', book)
+    print(f'Invariant (pos 3 for book in transformation_insertIntoList in behavioraddBookToBasket')
     print(f'Result (false is inv violation): {inv_result}')
     return 'addBookToBasket'
 
@@ -109,7 +109,7 @@ def addBookToBasket():
     worldStateManager.setBehavior('addBookToBasket')
     book = worldStateManager.get('book', 'BOOK', 'BOOK_W_NAME')
     basket = worldStateManager.getValue('basket', 'BASKET', 'BOOK_BASKET')
-    basket = insertIntoList(basket, book, 0)
+    basket = insertIntoList(basket, 0, book)
     worldStateManager.update('basket', basket, 'BASKET', 'BOOK_BASKET')
     worldStateManager.remove('book')
     return 'showBasket'
