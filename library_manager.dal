@@ -106,16 +106,15 @@ actor librarian {
     #=============================
     behavior getBookChoice {
         select{
-            goToBehavior(getPosition)
+            goToBehavior(acceptPosition)
         }
     }
 
     #=============================
-    #      Get Position
+    #      Accept Position
     #=============================
-    behavior getPosition {
-        getInput(position, "\nPlease enter position to get from basket: ")
-        
+    behavior acceptPosition {
+        getInput(position, "\nPlease enter position to get from basket: ")        
         worldStateManager(
             save_in=null, 
             transformation=create, 
