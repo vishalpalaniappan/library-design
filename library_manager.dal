@@ -241,7 +241,7 @@ actor librarian {
             name="book"
         )  
         select{
-            goToBehavior(getChoice)
+            goToBehavior(acceptChoice)
         }
     }
 
@@ -351,7 +351,7 @@ actor librarian {
         )
         display("f'Basket Contents: {basket}'")
         select{
-            goToBehavior(getChoice)
+            goToBehavior(acceptChoice)
         }
     }
 
