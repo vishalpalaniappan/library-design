@@ -144,7 +144,7 @@ def getFirstCharacter_invariant_1(value):
         The value must be a string and its length
         has to be greater than 0.
     '''
-    return not isinstance(value, str) and len(value) > 0
+    return not (isinstance(value, str) and len(value) > 0)
 
 
 #=====================================
