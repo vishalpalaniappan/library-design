@@ -132,6 +132,20 @@ def getNestedValue_invariant_2(keys):
         and all(isinstance(key, (str, int)) for key in keys)
     )
 
+#=====================================
+#      Get First Character Of String
+#=====================================
+def getFirstCharacter(value):
+    return value[0]
+
+
+def getFirstCharacter_invariant_1(value):
+    '''
+        The value must be a string and its length
+        has to be greater than 0.
+    '''
+    return isinstance(value, str) and len(value) > 0
+
 
 #=====================================
 #      Convert String To Number
