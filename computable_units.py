@@ -39,7 +39,7 @@ def getFromPosition_invariant_1(list_to_access):
     '''
         list_to_access must be list
     '''
-    return not hasattr(list_to_access, "__len__")
+    return not (isinstance(list_to_access, list) and hasattr(list_to_access, "__len__"))
 
 def getFromPosition_invariant_2(position):
     '''
