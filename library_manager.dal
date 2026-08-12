@@ -15,25 +15,24 @@ actor librarian {
     #      Create Basket
     #=============================
     behavior createBasket {
-        set("basket",[],[])
         worldStateManager(
             save_in=null, 
             transformation=create, 
             name="basket",
-            value=basket,
+            value=[],
             p_type="BASKET", 
             p_role="BOOK_BASKET", 
             is_input=False
         )
         select{
-            goToBehavior(getChoice)   
+            goToBehavior(acceptChoice)   
         }
     }
 
     #=============================
     #      Get Choice
     #=============================
-    behavior getChoice {
+    behavior acceptChoice {
         getInput(choice, "\nGet user choice (a for add book, g for get book, else exit): ")
         worldStateManager(
             save_in=null, 
@@ -234,7 +233,7 @@ actor librarian {
             p_role="BOOK_NAME"
         )
         
-        _getFromPosition(firstLetter, name, 0)
+        _getFirstCharacter(firstLetter, name)
         display("f'Got book named {name} and it has first letter {firstLetter}'")
         
         worldStateManager(
