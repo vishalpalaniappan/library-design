@@ -121,7 +121,7 @@ actor librarian {
             name="position",
             value=position,
             p_type="POSITION", 
-            p_role="BASKET_POSITION", 
+            p_role="BASKET_POSITION_STR", 
             is_input=True
         )   
         select{
@@ -138,13 +138,13 @@ actor librarian {
             transformation=getValue, 
             name="position",
             p_type="POSITION", 
-            p_role="BASKET_POSITION"
+            p_role="BASKET_POSITION_STR"
         )
         _convertStrToNumber(position, position)
 
         worldStateManager(
             save_in=null, 
-            transformation=update, 
+            transformation=create, 
             name="position",
             value=position,
             p_type="POSITION", 
