@@ -38,13 +38,26 @@ def createBasket():
         invariantViolated = callIfExist('insertIntoList_invariant_1', basket)
         if invariantViolated:
             print(f'Invariant Violation: insertIntoList_invariant_1 for basket in transformation _insertIntoList in behavior addBookToBasket')
+    hasParticipants = worldStateManager.hasParticipants(['basket'])
+    if hasParticipants:
+        basket = worldStateManager.getValue('basket', '', '')
+        invariantViolated = callIfExist('insertIntoList_invariant_1_2', basket, 0)
+        if invariantViolated:
+            print(f'Invariant Violation: insertIntoList_invariant_1_2 for basket,0 in transformation _insertIntoList in behavior addBookToBasket')
     hasParticipants = worldStateManager.hasParticipants(['basket', 'book'])
     if hasParticipants:
         basket = worldStateManager.getValue('basket', '', '')
         book = worldStateManager.getValue('book', '', '')
-        invariantViolated = callIfExist('insertIntoList_invariant_1_2', basket, book)
+        invariantViolated = callIfExist('insertIntoList_invariant_1_2_3', basket, 0, book)
         if invariantViolated:
-            print(f'Invariant Violation: insertIntoList_invariant_1_2 for basket,book in transformation _insertIntoList in behavior addBookToBasket')
+            print(f'Invariant Violation: insertIntoList_invariant_1_2_3 for basket,0,book in transformation _insertIntoList in behavior addBookToBasket')
+    hasParticipants = worldStateManager.hasParticipants(['basket', 'book'])
+    if hasParticipants:
+        basket = worldStateManager.getValue('basket', '', '')
+        book = worldStateManager.getValue('book', '', '')
+        invariantViolated = callIfExist('insertIntoList_invariant_1_3', basket, book)
+        if invariantViolated:
+            print(f'Invariant Violation: insertIntoList_invariant_1_3 for basket,book in transformation _insertIntoList in behavior addBookToBasket')
     return 'acceptChoice'
 
 def acceptChoice():
@@ -57,6 +70,12 @@ def acceptChoice():
         invariantViolated = callIfExist('isEqual_invariant_1', choice)
         if invariantViolated:
             print(f'Invariant Violation: isEqual_invariant_1 for choice in transformation _isEqual in behavior evaluateChoice')
+    hasParticipants = worldStateManager.hasParticipants(['choice'])
+    if hasParticipants:
+        choice = worldStateManager.getValue('choice', '', '')
+        invariantViolated = callIfExist('isEqual_invariant_1_2', choice, 'a')
+        if invariantViolated:
+            print(f'Invariant Violation: isEqual_invariant_1_2 for choice,a in transformation _isEqual in behavior evaluateChoice')
     return 'displayChoice'
 
 def displayChoice():
@@ -85,53 +104,21 @@ def getBookChoice():
 
 def acceptPosition():
     worldStateManager.setBehavior('acceptPosition')
-    position = input('\nPlease enter position to get from basket: ')
-    worldStateManager.create('position', position, 'POSITION', 'BASKET_POSITION', True)
-    hasParticipants = worldStateManager.hasParticipants(['position'])
+    position_str = input('\nPlease enter position to get from basket: ')
+    worldStateManager.create('position_str', position_str, 'POSITION', 'BASKET_POSITION_STR', True)
+    hasParticipants = worldStateManager.hasParticipants(['position_str'])
     if hasParticipants:
-        position = worldStateManager.getValue('position', '', '')
-        invariantViolated = callIfExist('convertStrToNumber_invariant_1', position)
+        position_str = worldStateManager.getValue('position_str', '', '')
+        invariantViolated = callIfExist('convertStrToNumber_invariant_1', position_str)
         if invariantViolated:
-            print(f'Invariant Violation: convertStrToNumber_invariant_1 for position in transformation _convertStrToNumber in behavior convertToNumber')
-    hasParticipants = worldStateManager.hasParticipants(['basket', 'position'])
-    if hasParticipants:
-        basket = worldStateManager.getValue('basket', '', '')
-        position = worldStateManager.getValue('position', '', '')
-        invariantViolated = callIfExist('getFromPosition_invariant_1_2', basket, position)
-        if invariantViolated:
-            print(f'Invariant Violation: getFromPosition_invariant_1_2 for basket,position in transformation _getFromPosition in behavior getBookFromBasket')
-    hasParticipants = worldStateManager.hasParticipants(['position'])
-    if hasParticipants:
-        position = worldStateManager.getValue('position', '', '')
-        invariantViolated = callIfExist('getFromPosition_invariant_2', position)
-        if invariantViolated:
-            print(f'Invariant Violation: getFromPosition_invariant_2 for position in transformation _getFromPosition in behavior getBookFromBasket')
-    hasParticipants = worldStateManager.hasParticipants(['basket', 'position'])
-    if hasParticipants:
-        basket = worldStateManager.getValue('basket', '', '')
-        position = worldStateManager.getValue('position', '', '')
-        invariantViolated = callIfExist('removeFromPosition_invariant_1_2', basket, position)
-        if invariantViolated:
-            print(f'Invariant Violation: removeFromPosition_invariant_1_2 for basket,position in transformation _removeFromPosition in behavior getBookFromBasket')
-    hasParticipants = worldStateManager.hasParticipants(['position'])
-    if hasParticipants:
-        position = worldStateManager.getValue('position', '', '')
-        invariantViolated = callIfExist('removeFromPosition_invariant_2', position)
-        if invariantViolated:
-            print(f'Invariant Violation: removeFromPosition_invariant_2 for position in transformation _removeFromPosition in behavior getBookFromBasket')
+            print(f'Invariant Violation: convertStrToNumber_invariant_1 for position_str in transformation _convertStrToNumber in behavior convertToNumber')
     return 'convertToNumber'
 
 def convertToNumber():
     worldStateManager.setBehavior('convertToNumber')
-    position = worldStateManager.getValue('position', 'POSITION', 'BASKET_POSITION')
-    position = convertStrToNumber(position)
-    worldStateManager.update('position', position, 'POSITION', 'BASKET_POSITION')
-    hasParticipants = worldStateManager.hasParticipants(['position'])
-    if hasParticipants:
-        position = worldStateManager.getValue('position', '', '')
-        invariantViolated = callIfExist('getFromPosition_invariant_2', position)
-        if invariantViolated:
-            print(f'Invariant Violation: getFromPosition_invariant_2 for position in transformation _getFromPosition in behavior getBookFromBasket')
+    position_str = worldStateManager.getValue('position_str', 'POSITION', 'BASKET_POSITION_STR')
+    position = convertStrToNumber(position_str)
+    worldStateManager.create('position', position, 'POSITION', 'BASKET_POSITION', False)
     hasParticipants = worldStateManager.hasParticipants(['basket', 'position'])
     if hasParticipants:
         basket = worldStateManager.getValue('basket', '', '')
@@ -142,9 +129,9 @@ def convertToNumber():
     hasParticipants = worldStateManager.hasParticipants(['position'])
     if hasParticipants:
         position = worldStateManager.getValue('position', '', '')
-        invariantViolated = callIfExist('removeFromPosition_invariant_2', position)
+        invariantViolated = callIfExist('getFromPosition_invariant_2', position)
         if invariantViolated:
-            print(f'Invariant Violation: removeFromPosition_invariant_2 for position in transformation _removeFromPosition in behavior getBookFromBasket')
+            print(f'Invariant Violation: getFromPosition_invariant_2 for position in transformation _getFromPosition in behavior getBookFromBasket')
     hasParticipants = worldStateManager.hasParticipants(['basket', 'position'])
     if hasParticipants:
         basket = worldStateManager.getValue('basket', '', '')
@@ -152,6 +139,12 @@ def convertToNumber():
         invariantViolated = callIfExist('removeFromPosition_invariant_1_2', basket, position)
         if invariantViolated:
             print(f'Invariant Violation: removeFromPosition_invariant_1_2 for basket,position in transformation _removeFromPosition in behavior getBookFromBasket')
+    hasParticipants = worldStateManager.hasParticipants(['position'])
+    if hasParticipants:
+        position = worldStateManager.getValue('position', '', '')
+        invariantViolated = callIfExist('removeFromPosition_invariant_2', position)
+        if invariantViolated:
+            print(f'Invariant Violation: removeFromPosition_invariant_2 for position in transformation _removeFromPosition in behavior getBookFromBasket')
     return 'getBookFromBasket'
 
 def getBookFromBasket():
@@ -203,19 +196,38 @@ def createBook():
         invariantViolated = callIfExist('getNestedValue_invariant_1', book)
         if invariantViolated:
             print(f'Invariant Violation: getNestedValue_invariant_1 for book in transformation _getNestedValue in behavior getBookName')
+    hasParticipants = worldStateManager.hasParticipants(['book'])
+    if hasParticipants:
+        book = worldStateManager.getValue('book', '', '')
+        invariantViolated = callIfExist('getNestedValue_invariant_1_2', book, ['name'])
+        if invariantViolated:
+            print(f'Invariant Violation: getNestedValue_invariant_1_2 for book,name in transformation _getNestedValue in behavior getBookName')
     hasParticipants = worldStateManager.hasParticipants(['basket', 'book'])
     if hasParticipants:
         basket = worldStateManager.getValue('basket', '', '')
         book = worldStateManager.getValue('book', '', '')
-        invariantViolated = callIfExist('insertIntoList_invariant_1_2', basket, book)
+        invariantViolated = callIfExist('insertIntoList_invariant_1_2_3', basket, 0, book)
         if invariantViolated:
-            print(f'Invariant Violation: insertIntoList_invariant_1_2 for basket,book in transformation _insertIntoList in behavior addBookToBasket')
+            print(f'Invariant Violation: insertIntoList_invariant_1_2_3 for basket,0,book in transformation _insertIntoList in behavior addBookToBasket')
+    hasParticipants = worldStateManager.hasParticipants(['basket', 'book'])
+    if hasParticipants:
+        basket = worldStateManager.getValue('basket', '', '')
+        book = worldStateManager.getValue('book', '', '')
+        invariantViolated = callIfExist('insertIntoList_invariant_1_3', basket, book)
+        if invariantViolated:
+            print(f'Invariant Violation: insertIntoList_invariant_1_3 for basket,book in transformation _insertIntoList in behavior addBookToBasket')
     hasParticipants = worldStateManager.hasParticipants(['book'])
     if hasParticipants:
         book = worldStateManager.getValue('book', '', '')
-        invariantViolated = callIfExist('insertIntoList_invariant_2', book)
+        invariantViolated = callIfExist('insertIntoList_invariant_2_3', 0, book)
         if invariantViolated:
-            print(f'Invariant Violation: insertIntoList_invariant_2 for book in transformation _insertIntoList in behavior addBookToBasket')
+            print(f'Invariant Violation: insertIntoList_invariant_2_3 for 0,book in transformation _insertIntoList in behavior addBookToBasket')
+    hasParticipants = worldStateManager.hasParticipants(['book'])
+    if hasParticipants:
+        book = worldStateManager.getValue('book', '', '')
+        invariantViolated = callIfExist('insertIntoList_invariant_3', book)
+        if invariantViolated:
+            print(f'Invariant Violation: insertIntoList_invariant_3 for book in transformation _insertIntoList in behavior addBookToBasket')
     return 'addBookToBasket'
 
 def addBookToBasket():

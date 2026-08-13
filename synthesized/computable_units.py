@@ -47,7 +47,7 @@ def getFromPosition_invariant_2(position):
     '''
     return not isinstance(position, int)
 
-def getFromPosition_invariant_1_2(position, list_to_access):
+def getFromPosition_invariant_1_2(list_to_access, position):
     '''
         position must be within range
     '''
@@ -152,3 +152,13 @@ def getFirstCharacter_invariant_1(value):
 #=====================================
 def convertStrToNumber(strValue):
     return int(strValue)
+
+def convertStrToNumber_invariant_1(strValue):
+    '''
+        It has to be a string and it has to represent
+        a valid whole number.
+
+        This can be extended to include float values as
+        well.
+    '''
+    return not (isinstance(strValue, str) and strValue.isdigit())
