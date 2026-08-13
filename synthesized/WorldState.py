@@ -23,6 +23,9 @@ class WorldState:
         if self.mode == "verbose":
             semanticLogger.logBehavior(behaviorName)
 
+    def setInvariantViolation(self, invariantName, invartiantParticipant, protectedBehavior):
+        semanticLogger.logInvariant(self.behavior, invariantName, invartiantParticipant, protectedBehavior )
+
     def setFailure(self):
         semanticLogger.logFailure(self.behavior)
 
@@ -82,6 +85,18 @@ class WorldState:
 
     def getUid(self, name):
         return self.worldState[name]["uid"]
+
+    def hasParticipant(self, name):
+        if name in self.worldState:
+            return True
+        else:
+            return False
+
+    def hasParticipants(self, names):
+        for name in names:
+            if name not in self.worldState:
+                return False
+        return True
 
     def update(self, name, value, type, role):
         self.worldState[name]["value"] = value
