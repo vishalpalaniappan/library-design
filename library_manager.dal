@@ -138,7 +138,8 @@ actor librarian {
             transformation=getValue, 
             name="position",
             p_type="POSITION", 
-            p_role="BASKET_POSITION_STR"
+            p_role="BASKET_POSITION_STR", 
+            is_input=False
         )
         _convertStrToNumber(position, position)
 
