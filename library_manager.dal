@@ -114,12 +114,12 @@ actor librarian {
     #      Accept Position
     #=============================
     behavior acceptPosition {
-        getInput(position, "\nPlease enter position to get from basket: ")        
+        getInput(position_str, "\nPlease enter position to get from basket: ")        
         worldStateManager(
             save_in=null, 
             transformation=create, 
-            name="position",
-            value=position,
+            name="position_str",
+            value=position_str,
             p_type="POSITION", 
             p_role="BASKET_POSITION_STR", 
             is_input=True
@@ -134,13 +134,13 @@ actor librarian {
     #=============================
     behavior convertToNumber {
         worldStateManager(
-            save_in=position, 
+            save_in=position_str, 
             transformation=getValue, 
-            name="position",
+            name="position_str",
             p_type="POSITION", 
             p_role="BASKET_POSITION_STR"
         )
-        _convertStrToNumber(position, position)
+        _convertStrToNumber(position, position_str)
 
         worldStateManager(
             save_in=null, 
