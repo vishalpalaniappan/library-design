@@ -33,7 +33,7 @@ actor librarian {
     #      Get Choice
     #=============================
     behavior acceptChoice {
-        getInput(choice, "\nGet user choice (a for add book, g for get book, else exit): ")
+        getInput(choice, "\nGet user choice (a for add book, g for get book, d for display, else exit): ")
         worldStateManager(
             save_in=null, 
             transformation=create, 
@@ -80,12 +80,16 @@ actor librarian {
         )
         _isEqual(isAdd, choice, "a")
         _isEqual(isGet, choice, "g")
+        _isEqual(isDisplay, choice, "d")
         select{
             if (isAdd) {
                 goToBehavior(addBookChoice)
             }
             if (isGet) {
                 goToBehavior(getBookChoice)
+            }
+            if (isDisplay) {
+                goToBehavior(displayBasketChoice)
             }
         }
     }
@@ -107,6 +111,16 @@ actor librarian {
     behavior getBookChoice {
         select{
             goToBehavior(acceptPosition)
+        }
+    }
+
+
+    #=============================
+    #   Get Display Basket Choice
+    #=============================
+    behavior displayBasketChoice {
+        select{
+            goToBehavior(showBasket)
         }
     }
 
@@ -335,7 +349,7 @@ actor librarian {
             name="book"
         )
         select{
-            goToBehavior(showBasket)
+            goToBehavior(acceptChoice)
         }
     }
 
