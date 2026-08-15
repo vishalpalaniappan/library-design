@@ -195,3 +195,18 @@ def convertStrToNumber_invariant_1(strValue):
         well.
     '''
     return not (isinstance(strValue, str) and strValue.isdigit())
+
+#=====================================
+#      Get Input From Terminal
+#=====================================
+def getInput(strValue):
+    return input(strValue)
+
+#=====================================
+#      Display
+#=====================================
+def printFormattedString(formatted_string):
+    return print(formatted_string)
+
+def printFormattedString_invariant_1(formatted_string):
+    return not isinstance(formatted_string, str)

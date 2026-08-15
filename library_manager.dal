@@ -12,9 +12,9 @@ actor librarian {
     include("computable_units.py")
 
     #=============================
-    #      Create Basket
+    #   Initialize World State
     #=============================
-    behavior createBasket {
+    behavior initWorldState {
         worldStateManager(
             save_in=null, 
             transformation=create, 
@@ -24,25 +24,60 @@ actor librarian {
             p_role="BOOK_BASKET", 
             is_input=False
         )
+        worldStateManager(
+            save_in=null, 
+            transformation=create, 
+            name="choice_prompt",
+            value="\nGet user choice (a for add book, g for get book, d for display, else exit): ", 
+            p_type="STRING", 
+            p_role="CHOICE_PROMPT", 
+            is_input=False
+        )
+        worldStateManager(
+            save_in=null, 
+            transformation=create, 
+            name="book_name_prompt",
+            value="\nPlease enter book name: ", 
+            p_type="STRING", 
+            p_role="BOOK_NAME_PROMPT", 
+            is_input=False
+        )
+        worldStateManager(
+            save_in=null, 
+            transformation=create, 
+            name="basket_position_prompt",
+            value="\nPlease enter position to get from basket: ", 
+            p_type="STRING", 
+            p_role="BASKET_POSITION_PROMPT", 
+            is_input=False
+        )
         select{
             goToBehavior(acceptChoice)   
         }
     }
 
+
     #=============================
     #      Get Choice
     #=============================
     behavior acceptChoice {
-        getInput(choice, "\nGet user choice (a for add book, g for get book, d for display, else exit): ")
+        worldStateManager(
+            save_in=choice_prompt, 
+            transformation=getValue, 
+            name="choice_prompt",
+            p_type="STRING", 
+            p_role="CHOICE_PROMPT"
+        )
+        _getInput(choice, choice_prompt)
         worldStateManager(
             save_in=null, 
             transformation=create, 
             name="choice",
-            value=choice, 
+            value=choice,
             p_type="CHOICE", 
             p_role="USER_CHOICE", 
             is_input=True
-        )
+        )   
         select{
             goToBehavior(displayChoice)   
         }
@@ -60,7 +95,7 @@ actor librarian {
             p_type="CHOICE", 
             p_role="USER_CHOICE"
         )
-        display("f'User Choice: {choice}'")
+        _printFormattedString(null, f"User Choice: {choice}")
         select{
             goToBehavior(evaluateChoice)   
         }
@@ -128,7 +163,7 @@ actor librarian {
     #      Accept Position
     #=============================
     behavior acceptPosition {
-        getInput(position_str, "\nPlease enter position to get from basket: ")        
+        _getInput(position_str, "\nPlease enter position to get from basket: ")        
         worldStateManager(
             save_in=null, 
             transformation=create, 
@@ -248,7 +283,7 @@ actor librarian {
         )
         
         _getFirstCharacter(firstLetter, name)
-        display("f'Got book named {name} and it has first letter {firstLetter}'")
+        _printFormattedString(null, f"Got book named {name} and it has first letter {firstLetter}")
         
         worldStateManager(
             save_in=null, 
@@ -264,7 +299,7 @@ actor librarian {
     #      Get Book From Basket
     #=============================
     behavior getName {
-        getInput(name, "\nPlease enter book name: ")
+        _getInput(name, "\nPlease enter book name: ")
         
         worldStateManager(
             save_in=null, 
@@ -363,11 +398,11 @@ actor librarian {
             p_type="BASKET", 
             p_role="BOOK_BASKET"
         )
-        display("f'Basket Contents: {basket}'")
+        _printFormattedString(null, f"Basket Contents: {basket}")
         select{
             goToBehavior(acceptChoice)
         }
     }
 
-    run(createBasket)
+    run(initWorldState)
 }

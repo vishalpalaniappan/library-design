@@ -3,9 +3,19 @@ from registered import *
 from WorldState import WorldState
 from LoggingHelper import semanticLogger
 
-def createBasket():
-    worldStateManager.setBehavior('createBasket')
+def initWorldState():
+    worldStateManager.setBehavior('initWorldState')
     worldStateManager.create('basket', [], 'BASKET', 'BOOK_BASKET', False)
+    worldStateManager.create('choice_prompt', '\nGet user choice (a for add book, g for get book, d for display, else exit): ', 'STRING', 'CHOICE_PROMPT', False)
+    worldStateManager.create('book_name_prompt', '\nPlease enter book name: ', 'STRING', 'BOOK_NAME_PROMPT', False)
+    worldStateManager.create('basket_position_prompt', '\nPlease enter position to get from basket: ', 'STRING', 'BASKET_POSITION_PROMPT', False)
+    hasParticipants = worldStateManager.hasParticipants(['choice_prompt'])
+    if hasParticipants:
+        choice_prompt = worldStateManager.getValue('choice_prompt', '', '')
+        invariantViolated = callIfExist('getInput_invariant_1', choice_prompt)
+        if invariantViolated:
+            print(f'Semantically invalid state: getInput_invariant_1 for choice_prompt in transformation _getInput in behavior acceptChoice')
+            hasParticipants = worldStateManager.setInvariantViolation('getInput_invariant_1', 'choice_prompt', 'acceptChoice')
     hasParticipants = worldStateManager.hasParticipants(['basket'])
     if hasParticipants:
         basket = worldStateManager.getValue('basket', '', '')
@@ -70,7 +80,8 @@ def createBasket():
 
 def acceptChoice():
     worldStateManager.setBehavior('acceptChoice')
-    choice = input('\nGet user choice (a for add book, g for get book, d for display, else exit): ')
+    choice_prompt = worldStateManager.getValue('choice_prompt', 'STRING', 'CHOICE_PROMPT')
+    choice = getInput(choice_prompt)
     worldStateManager.create('choice', choice, 'CHOICE', 'USER_CHOICE', True)
     hasParticipants = worldStateManager.hasParticipants(['choice'])
     if hasParticipants:
@@ -91,7 +102,7 @@ def acceptChoice():
 def displayChoice():
     worldStateManager.setBehavior('displayChoice')
     choice = worldStateManager.getValue('choice', 'CHOICE', 'USER_CHOICE')
-    print(f'User Choice: {choice}')
+    printFormattedString(f"User Choice: {choice}")
     return 'evaluateChoice'
 
 def evaluateChoice():
@@ -121,7 +132,7 @@ def displayBasketChoice():
 
 def acceptPosition():
     worldStateManager.setBehavior('acceptPosition')
-    position_str = input('\nPlease enter position to get from basket: ')
+    position_str = getInput('\nPlease enter position to get from basket: ')
     worldStateManager.create('position_str', position_str, 'POSITION', 'BASKET_POSITION_STR', True)
     hasParticipants = worldStateManager.hasParticipants(['position_str'])
     if hasParticipants:
@@ -189,13 +200,13 @@ def getFirstLetterOfBookName():
     worldStateManager.setBehavior('getFirstLetterOfBookName')
     name = worldStateManager.getValue('name', 'NAME', 'BOOK_NAME')
     firstLetter = getFirstCharacter(name)
-    print(f'Got book named {name} and it has first letter {firstLetter}')
+    printFormattedString(f"Got book named {name} and it has first letter {firstLetter}")
     worldStateManager.remove('book')
     return 'acceptChoice'
 
 def getName():
     worldStateManager.setBehavior('getName')
-    name = input('\nPlease enter book name: ')
+    name = getInput('\nPlease enter book name: ')
     worldStateManager.create('name', name, 'NAME', 'BOOK_NAME', True)
     hasParticipants = worldStateManager.hasParticipants(['name'])
     if hasParticipants:
@@ -300,11 +311,11 @@ def addBookToBasket():
 def showBasket():
     worldStateManager.setBehavior('showBasket')
     basket = worldStateManager.getValue('basket', 'BASKET', 'BOOK_BASKET')
-    print(f'Basket Contents: {basket}')
+    printFormattedString(f"Basket Contents: {basket}")
     return 'acceptChoice'
 if __name__ == '__main__':
     worldStateManager = WorldState('verbose')
-    nextBehavior = 'createBasket'
+    nextBehavior = 'initWorldState'
     worldState = {}
     while nextBehavior:
         try:
