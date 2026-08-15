@@ -292,9 +292,7 @@ actor librarian {
             p_role="BOOK_W_NAME"
         )
 
-        # TODO: Move to computable units with invariants
-        set(book, [], {})
-        set(book, ["name"], name)
+        _setNestedValue(book, {}, ["name"], name)
 
         worldStateManager(
             save_in=null, 

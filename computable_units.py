@@ -133,6 +133,39 @@ def getNestedValue_invariant_2(keys):
     )
 
 #=====================================
+#      Set Value In Object
+#=====================================
+def setNestedValue(obj, keys, value):
+    '''
+        Sets value at the given nested keys.
+    '''
+    nestedObj = obj
+
+    for key in keys[:-1]:
+        nestedObj = nestedObj[key]
+
+    nestedObj[keys[-1]] = value
+    return obj
+
+
+def setNestedValue_invariant_1(obj):
+    '''
+        obj must support keyed/indexed access and assignment
+    '''
+    return not isinstance(obj, (dict, list))
+
+
+def setNestedValue_invariant_2(keys):
+    '''
+        keys must be a non-empty list/tuple of valid key/index types
+    '''
+    return not (
+        isinstance(keys, (list, tuple))
+        and len(keys) > 0
+        and all(isinstance(key, (str, int)) for key in keys)
+    )
+
+#=====================================
 #      Get First Character Of String
 #=====================================
 def getFirstCharacter(value):
