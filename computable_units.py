@@ -200,6 +200,32 @@ def convertStrToNumber_invariant_1(strValue):
 #      Get Input From Terminal
 #=====================================
 def getInput(strValue):
+    '''
+        TODO: 
+        The design of input says that EOF error
+        is possible if the environment doesn't
+        terminate the input properly.
+
+        I would have to catch that error and then
+        it would become included in the semantics
+        and it would modify the behavior of the
+        design to continue realizing its intentions.
+
+        If I was working with the design of input
+        directly, through shared meaning, it could
+        tell me that EOF occured. This would then
+        have an unambiguous meaning in my design and
+        my behavior would act accoringly.
+
+        Since I am using an opaque transformation, I
+        have to introduce the valid state into the
+        world and my behvior has to act accordingly.
+
+        If getInput was a composite behavior, it would
+        operate on the world state directly, so the
+        necessary semantics would already be available
+        and my behavior would have to act accordingly.
+    '''
     return input(strValue)
 
 #=====================================
