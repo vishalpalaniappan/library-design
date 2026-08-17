@@ -1,1 +1,1 @@
-{"designName": "library_manager", "actors": ["librarian"], "commands": ["python3 librarian.py"], "required": ["registered.py", "computable_units.py"]}
+{"name": "library_manager", "type": "design", "commands": ["python3 library_manager.py"], "required": ["registered.py", "computable_units.py"]}
