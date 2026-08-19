@@ -119,7 +119,16 @@ def getLength_invariant_1(value):
         Invariants:
         - value must have a length
     '''
-    return not hasattr(value, '__len__')
+    if type == "evaluate":
+        return not hasattr(value, '__len__')
+    
+    if type == "getInvalidValues":
+        # Int doesn't have length attribute
+        return [
+            [
+                1
+            ]
+        ]
 
 #==================================
 #   Insert Into List
@@ -136,19 +145,43 @@ def insertIntoList_invariant_1(list_to_modify):
     '''
         list_to_modify must be list
     '''
-    return not hasattr(list_to_modify, "__len__")
+    if type == "evaluate":
+        return not (isinstance(list_to_modify, list) and hasattr(list_to_modify, "__len__"))
+
+    if type == "getInvalidValues":
+        # Basket with single book and position is 9
+        return [
+            [
+                "not a list"
+            ]
+        ]
 
 def insertIntoList_invariant_2(position):
     '''
         position must be int
     '''
-    return not isinstance(position, int)
+    if type == "evaluate":
+        return not isinstance(position, list)
+
+    if type == "getInvalidValues":
+        return [
+            ["test"]
+        ]
 
 def insertIntoList_invariant_1_2(list_to_modify, position):
     '''
         position must be within insertion range
     '''
-    return not (0 <= position <= len(list_to_modify))
+    if type == "evaluate":
+        return not (0 <= position < len(list_to_modify))
+
+    if type == "getInvalidValues":
+        # Basket with single book and position is 9
+        return [
+            [
+                [{"name":"book"}], 9
+            ]
+        ]
 
 #=====================================
 #      Get Value From Object
@@ -169,7 +202,16 @@ def getNestedValue_invariant_1(obj):
     '''
         obj must support keyed/indexed access
     '''
-    return not isinstance(obj, (dict, list, tuple, str))
+    if type == "evaluate":
+        return not isinstance(obj, (dict, list, tuple, str))
+
+    if type == "getInvalidValues":
+        # Int does not have keyed/indexed access
+        return [
+            [
+                1
+            ]
+        ]
 
 
 def getNestedValue_invariant_2(keys):
