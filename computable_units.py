@@ -333,18 +333,38 @@ def getFirstCharacter_invariant_1(type, value):
 #=====================================
 #      Convert String To Number
 #=====================================
-def convertStrToNumber(strValue):
+def convertStrToNumberInt(strValue):
     return int(strValue)
 
-def convertStrToNumber_invariant_1(strValue):
+def convertStrToNumberInt_invariant_1(type, strValue):
     '''
         It has to be a string and it has to represent
         a valid whole number.
-
-        This can be extended to include float values as
-        well.
     '''
-    return not (isinstance(strValue, str) and strValue.isdigit())
+    if type == "evaluate":
+        return not (
+            isinstance(strValue, str)
+            and len(strValue) > 0
+            and strValue.isdigit()
+        )
+
+    if type == "getInvalidValues":
+        return [
+            # value is not a string
+            [
+                1
+            ],
+
+            # string does not represent a whole number
+            [
+                "1.5"
+            ],
+
+            # string is empty
+            [
+                ""
+            ]
+        ]
 
 #=====================================
 #      Get Input From Terminal

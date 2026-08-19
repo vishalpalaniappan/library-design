@@ -188,7 +188,7 @@ behavior convertToNumber {
         p_type="POSITION", 
         p_role="BASKET_POSITION_STR"
     )
-    _convertStrToNumber(position, position_str)
+    _convertStrToNumberInt(position, position_str)
 
     worldStateManager(
         save_in=null, 
