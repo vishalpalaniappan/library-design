@@ -252,23 +252,54 @@ def setNestedValue(obj, keys, value):
     nestedObj[keys[-1]] = value
     return obj
 
-
-def setNestedValue_invariant_1(obj):
+def setNestedValue_invariant_1(obj, type):
     '''
         obj must support keyed/indexed access and assignment
     '''
-    return not isinstance(obj, (dict, list))
+    if type == "evaluate":
+        return not isinstance(obj, (dict, list))
 
+    if type == "getInvalidValues":
+        return [
+            # Does not support keyed/indexed access
+            [
+                1
+            ],
 
-def setNestedValue_invariant_2(keys):
+            # Supports indexed access, but not assignment
+            [
+                (1, 2)
+            ]
+        ]
+
+def setNestedValue_invariant_2(keys, type):
     '''
         keys must be a non-empty list/tuple of valid key/index types
     '''
-    return not (
-        isinstance(keys, (list, tuple))
-        and len(keys) > 0
-        and all(isinstance(key, (str, int)) for key in keys)
-    )
+    if type == "evaluate":
+        return not (
+            isinstance(keys, (list, tuple))
+            and len(keys) > 0
+            and all(isinstance(key, (str, int)) for key in keys)
+        )
+
+    if type == "getInvalidValues":
+        return [
+            # keys is not a list/tuple
+            [
+                1
+            ],
+
+            # keys is empty
+            [
+                []
+            ],
+
+            # keys contains an invalid key type
+            [
+                [1.5]
+            ]
+        ]
 
 #=====================================
 #      Get First Character Of String
