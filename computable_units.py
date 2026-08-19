@@ -29,11 +29,14 @@ def removeFromPosition_invariant_2(type, position):
         position must be int
     '''
     if type == "evaluate":
-        return not isinstance(position, list)
+        return not isinstance(position, int)
 
     if type == "getInvalidValues":
         return [
-            ["test"]
+            # String is not an int
+            [
+                "test"
+            ]
         ]
 
 def removeFromPosition_invariant_1_2(type, list_to_modify, position):
@@ -65,10 +68,10 @@ def getFromPosition_invariant_1(type, list_to_access):
         list_to_access must be list
     '''
     if type == "evaluate":
-        return not (isinstance(list_to_access, list) and hasattr(list_to_access, "__len__"))
+        return not isinstance(list_to_access, list)
 
     if type == "getInvalidValues":
-        # Basket with single book and position is 9
+        # String is not a list
         return [
             [
                 "not a list"
@@ -80,11 +83,14 @@ def getFromPosition_invariant_2(type, position):
         position must be int
     '''
     if type == "evaluate":
-        return not isinstance(position, list)
+        return not isinstance(position, int)
 
     if type == "getInvalidValues":
         return [
-            ["test"]
+            # String is not a list
+            [
+                "test"
+            ]
         ]
 
 def getFromPosition_invariant_1_2(type, list_to_access, position):
@@ -123,8 +129,8 @@ def getLength_invariant_1(type, value):
         return not hasattr(value, '__len__')
     
     if type == "getInvalidValues":
-        # Int doesn't have length attribute
         return [
+            # Int doesn't have length attribute
             [
                 1
             ]
@@ -146,10 +152,10 @@ def insertIntoList_invariant_1(type, list_to_modify):
         list_to_modify must be list
     '''
     if type == "evaluate":
-        return not (isinstance(list_to_modify, list) and hasattr(list_to_modify, "__len__"))
+        return not isinstance(list_to_modify, list)
 
     if type == "getInvalidValues":
-        # Basket with single book and position is 9
+        # String is not a list
         return [
             [
                 "not a list"
@@ -161,11 +167,14 @@ def insertIntoList_invariant_2(type, position):
         position must be int
     '''
     if type == "evaluate":
-        return not isinstance(position, list)
+        return not isinstance(position, int)
 
     if type == "getInvalidValues":
         return [
-            ["test"]
+            # String is not an int
+            [
+                "test"
+            ]
         ]
 
 def insertIntoList_invariant_1_2(type, list_to_modify, position):
@@ -176,8 +185,8 @@ def insertIntoList_invariant_1_2(type, list_to_modify, position):
         return not (0 <= position < len(list_to_modify))
 
     if type == "getInvalidValues":
-        # Basket with single book and position is 9
         return [
+            # Basket with single book and position is 9
             [
                 [{"name":"book"}], 9
             ]
@@ -206,8 +215,8 @@ def getNestedValue_invariant_1(type, obj):
         return not isinstance(obj, (dict, list, tuple, str))
 
     if type == "getInvalidValues":
-        # Int does not have keyed/indexed access
         return [
+            # Int does not have keyed/indexed access
             [
                 1
             ]
@@ -404,5 +413,18 @@ def getInput(strValue):
 def printFormattedString(formatted_string):
     return print(formatted_string)
 
-def printFormattedString_invariant_1(formatted_string):
-    return not isinstance(formatted_string, str)
+
+def printFormattedString_invariant_1(type, formatted_string):
+    '''
+        formatted_string must be a string.
+    '''
+    if type == "evaluate":
+        return not isinstance(formatted_string, str)
+
+    if type == "getInvalidValues":
+        # Number is not string
+        return [
+            [
+                1
+            ]
+        ]
