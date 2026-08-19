@@ -8,23 +8,47 @@ def removeFromPosition(list_to_modify, position):
     list_to_modify.pop(position)
     return list_to_modify
 
-def removeFromPosition_invariant_1(list_to_modify):
+def removeFromPosition_invariant_1(type, list_to_modify):
     '''
         list_to_modify must be list
     '''
-    return not isinstance(list_to_modify, list)
+    if type == "evaluate":
+        return not isinstance(list_to_modify, list)
+    
+    if type == "getInvalidValues":
+        # List of invalid values
+        # Each entry is a list with multiple args to the invariant
+        # In this case, it is a single arg
+        return [
+            ["not a list"]
+        ]
 
-def removeFromPosition_invariant_2( position):
+def removeFromPosition_invariant_2(type, position):
     '''
         position must be int
     '''
-    return not isinstance(position, int)
+    if type == "evaluate":
+        return not isinstance(position, list)
 
-def removeFromPosition_invariant_1_2(list_to_modify, position):
+    if type == "getInvalidValues":
+        return [
+            ["test"]
+        ]
+
+def removeFromPosition_invariant_1_2(type, list_to_modify, position):
     '''
         position must be within range
     '''
-    return not (0 <= position < len(list_to_modify))
+    if type == "evaluate":
+        return not (0 <= position < len(list_to_modify))
+
+    if type == "getInvalidValid":
+        # Basket with single book and position is 9
+        return [
+            [
+                [{"name":"book"}], 9
+            ]
+        ]
 
 #==================================
 #   Remove From Position
