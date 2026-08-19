@@ -218,10 +218,24 @@ def getNestedValue_invariant_2(keys):
     '''
         keys must be a list/tuple of valid key/index types
     '''
-    return not (
-        isinstance(keys, (list, tuple))
-        and all(isinstance(key, (str, int)) for key in keys)
-    )
+    if type == "evaluate":
+        return not (
+            isinstance(keys, (list, tuple))
+            and all(isinstance(key, (str, int)) for key in keys)
+        )
+
+    if type == "getInvalidValues":
+        return [
+            # keys is not a list/tuple
+            [
+                1
+            ],
+
+            # keys contains an invalid key type
+            [
+                [1.5]
+            ]
+        ]
 
 #=====================================
 #      Set Value In Object
