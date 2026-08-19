@@ -60,7 +60,7 @@ def getFromPosition(list_to_access, position):
     '''
     return list_to_access[position]
 
-def getFromPosition_invariant_1(list_to_access):
+def getFromPosition_invariant_1(type, list_to_access):
     '''
         list_to_access must be list
     '''
@@ -75,7 +75,7 @@ def getFromPosition_invariant_1(list_to_access):
             ]
         ]
 
-def getFromPosition_invariant_2(position):
+def getFromPosition_invariant_2(type, position):
     '''
         position must be int
     '''
@@ -87,7 +87,7 @@ def getFromPosition_invariant_2(position):
             ["test"]
         ]
 
-def getFromPosition_invariant_1_2(list_to_access, position):
+def getFromPosition_invariant_1_2(type, list_to_access, position):
     '''
         position must be within range
     '''
@@ -114,7 +114,7 @@ def isEqual(a, b):
 def getLength(value):
     return len(value)
 
-def getLength_invariant_1(value):
+def getLength_invariant_1(type, value):
     '''
         Invariants:
         - value must have a length
@@ -141,7 +141,7 @@ def insertIntoList(list_to_modify, position, value):
     list_to_modify.insert(position, value)
     return list_to_modify
 
-def insertIntoList_invariant_1(list_to_modify):
+def insertIntoList_invariant_1(type, list_to_modify):
     '''
         list_to_modify must be list
     '''
@@ -156,7 +156,7 @@ def insertIntoList_invariant_1(list_to_modify):
             ]
         ]
 
-def insertIntoList_invariant_2(position):
+def insertIntoList_invariant_2(type, position):
     '''
         position must be int
     '''
@@ -168,7 +168,7 @@ def insertIntoList_invariant_2(position):
             ["test"]
         ]
 
-def insertIntoList_invariant_1_2(list_to_modify, position):
+def insertIntoList_invariant_1_2(type, list_to_modify, position):
     '''
         position must be within insertion range
     '''
@@ -198,7 +198,7 @@ def getNestedValue(obj, keys):
     return value
 
 
-def getNestedValue_invariant_1(obj):
+def getNestedValue_invariant_1(type, obj):
     '''
         obj must support keyed/indexed access
     '''
@@ -214,7 +214,7 @@ def getNestedValue_invariant_1(obj):
         ]
 
 
-def getNestedValue_invariant_2(keys):
+def getNestedValue_invariant_2(type, keys):
     '''
         keys must be a list/tuple of valid key/index types
     '''
@@ -252,7 +252,7 @@ def setNestedValue(obj, keys, value):
     nestedObj[keys[-1]] = value
     return obj
 
-def setNestedValue_invariant_1(obj, type):
+def setNestedValue_invariant_1(type, obj):
     '''
         obj must support keyed/indexed access and assignment
     '''
@@ -272,7 +272,7 @@ def setNestedValue_invariant_1(obj, type):
             ]
         ]
 
-def setNestedValue_invariant_2(keys, type):
+def setNestedValue_invariant_2(type, keys):
     '''
         keys must be a non-empty list/tuple of valid key/index types
     '''
@@ -308,12 +308,26 @@ def getFirstCharacter(value):
     return value[0]
 
 
-def getFirstCharacter_invariant_1(value):
+def getFirstCharacter_invariant_1(type, value):
     '''
         The value must be a string and its length
         has to be greater than 0.
     '''
-    return not (isinstance(value, str) and len(value) > 0)
+    if type == "evaluate":
+        return not (isinstance(value, str) and len(value) > 0)
+
+    if type == "getInvalidValues":
+        return [
+            # value is not a string
+            [
+                1
+            ],
+
+            # value is an empty string
+            [
+                ""
+            ]
+        ]
 
 
 #=====================================
