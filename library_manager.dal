@@ -1,4 +1,8 @@
 design("library_manager")
+import("createAndAddBook.dal")
+import("getBookAndShelvingIndex.dal")
+include("registered.py")
+include("computable_units.py")
 
 #participant_type BASKET {
 #   Placeholder for participant type declaration
@@ -7,8 +11,6 @@ design("library_manager")
 #   that is passed to CLP.
 #}
 
-include("registered.py")
-include("computable_units.py")
 
 #=============================
 #   Initialize World State
@@ -173,123 +175,16 @@ behavior acceptPosition {
         is_input=True
     )   
     select{
-        goToBehavior(convertToNumber)
+        goToBehavior(getBook)
     }
 }
 
 #=============================
-#      Convert To Number
+#          Get Book 
 #=============================
-behavior convertToNumber {
-    worldStateManager(
-        save_in=position_str, 
-        transformation=getValue, 
-        name="position_str",
-        p_type="POSITION", 
-        p_role="BASKET_POSITION_STR"
-    )
-    _convertStrToNumber(position, position_str)
-
-    worldStateManager(
-        save_in=null, 
-        transformation=create, 
-        name="position",
-        value=position,
-        p_type="POSITION", 
-        p_role="BASKET_POSITION", 
-        is_input=False
-    )   
-    select{
-        goToBehavior(getBookFromBasket)
-    }
-}
-
-
-#=============================
-#      Get Book From Basket
-#=============================
-behavior getBookFromBasket {
-    worldStateManager(
-        save_in=basket, 
-        transformation=getValue, 
-        name="basket",
-        p_type="BASKET", 
-        p_role="BOOK_BASKET"
-    )
-    worldStateManager(
-        save_in=position, 
-        transformation=getValue, 
-        name="position",
-        p_type="POSITION", 
-        p_role="BASKET_POSITION"
-    )
-
-    _getFromPosition(book, basket, position)
-    _removeFromPosition(null, basket, position)
-
-    worldStateManager(
-        save_in=null, 
-        transformation=add, 
-        name="book",
-        value=book,
-        p_type="BOOK", 
-        p_role="BOOK_W_NAME", 
-        is_input=False
-    )
-    select{
-        goToBehavior(getBookName)
-    }
-}
-
-#=============================
-#      Get Book Name
-#=============================
-behavior getBookName {
-    worldStateManager(
-        save_in=book, 
-        transformation=getValue, 
-        name="book",
-        p_type="BOOK", 
-        p_role="BOOK_W_NAME"
-    )
-
-    _getNestedValue(name, book, ["name"])
-
-    worldStateManager(
-        save_in=null, 
-        transformation=add, 
-        name="name",
-        value=name,
-        p_type="NAME", 
-        p_role="BOOK_NAME", 
-        is_input=False
-    )   
-    select{
-        goToBehavior(getFirstLetterOfBookName)
-    }
-}
-
-#======================================
-#      Get First Letter of Book Name
-#=====================================
-behavior getFirstLetterOfBookName {
-    worldStateManager(
-        save_in=name, 
-        transformation=getValue, 
-        name="name",
-        p_type="NAME", 
-        p_role="BOOK_NAME"
-    )
-    
-    _getFirstCharacter(firstLetter, name)
-    _printFormattedString(null, f"Got book named {name} and it has first letter {firstLetter}")
-    
-    worldStateManager(
-        save_in=null, 
-        transformation=remove, 
-        name="book"
-    )  
-    select{
+behavior getBook{
+    runCompositeBehavior(getBookAndShelvingIndex)
+    select {
         goToBehavior(acceptChoice)
     }
 }
@@ -310,78 +205,16 @@ behavior getName {
         is_input=True
     )   
     select{
-        goToBehavior(createBook)
+        goToBehavior(addBook)
     }
 }
 
-#=============================
-#     Create Book
-#=============================
-behavior createBook {
-    worldStateManager(
-        save_in=name, 
-        transformation=getValue, 
-        name="name",
-        p_type="NAME", 
-        p_role="BOOK_W_NAME"
-    )
-
-    _setNestedValue(book, {}, ["name"], name)
-
-    worldStateManager(
-        save_in=null, 
-        transformation=create, 
-        name="book",
-        value=book,
-        p_type="BOOK", 
-        p_role="BOOK_W_NAME", 
-        is_input=False
-    )   
-    worldStateManager(
-        save_in=null, 
-        transformation=remove, 
-        name="name"
-    )
-    select{
-        goToBehavior(addBookToBasket)
-    }
-}
-
-#=============================
-#      Add Book To Basket
-#=============================
-behavior addBookToBasket {
-    worldStateManager(
-        save_in=book, 
-        transformation=get, 
-        name="book",
-        p_type="BOOK", 
-        p_role="BOOK_W_NAME"
-    )
-    worldStateManager(
-        save_in=basket, 
-        transformation=getValue, 
-        name="basket",
-        p_type="BASKET", 
-        p_role="BOOK_BASKET"
-    )
-
-    _insertIntoList(basket, basket, 0, book)
-
-    worldStateManager(
-        save_in=null, 
-        transformation=update, 
-        name="basket",
-        value=basket,
-        p_type="BASKET", 
-        p_role="BOOK_BASKET"
-    )   
-    worldStateManager(
-        save_in=null, 
-        transformation=remove, 
-        name="book"
-    )
-    select{
+#==================================
+#       Create and Add Book
+#=================================
+behavior addBook {
+    runCompositeBehavior(createAndAddBook)
+    select {
         goToBehavior(acceptChoice)
     }
 }
