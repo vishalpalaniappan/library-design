@@ -105,14 +105,14 @@ behavior displayChoice {
 #      Evaluate Choice
 #=============================
 behavior evaluateChoice {
-    worldStateManager(
-        save_in=choice, 
-        transformation=getValue, 
-        name="choice",
-        p_type="CHOICE", 
-        p_role="USER_CHOICE"
-    )
     select{
+        worldStateManager(
+            save_in=choice, 
+            transformation=getValue, 
+            name="choice",
+            p_type="CHOICE", 
+            p_role="USER_CHOICE"
+        )
         _isEqual(isAdd, choice, "a")
         _isEqual(isGet, choice, "g")
         _isEqual(isDisplay, choice, "d")
