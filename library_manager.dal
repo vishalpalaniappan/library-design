@@ -76,7 +76,7 @@ behavior acceptChoice {
         p_type="CHOICE", 
         p_role="USER_CHOICE", 
         is_input=True
-    )   
+    )
     select{
         goToBehavior(displayChoice)   
     }
@@ -308,7 +308,21 @@ behavior getName {
         p_type="NAME", 
         p_role="BOOK_NAME", 
         is_input=True
-    )   
+    )
+    select{
+        worldStateManager(
+            save_in=name, 
+            transformation=getValue, 
+            name="name",
+            p_type="NAME", 
+            p_role="BOOK_NAME"
+        )
+        _getLength(nameLength, name)
+        _isEqual(isEmptyString, nameLength, 0)
+        if (isEmptyString) {
+            goToBehavior(getName)
+        }
+    }   
     select{
         goToBehavior(createBook)
     }
