@@ -13,7 +13,8 @@ def removeFromPosition_invariant_1(type, list_to_modify):
         list_to_modify must be list
     '''
     if type == "evaluate":
-        return not isinstance(list_to_modify, list)
+        return not (isinstance(list_to_modify, list) and hasattr(list_to_modify, "__len__"))
+
     
     if type == "getInvalidValues":
         # List of invalid values
@@ -42,7 +43,7 @@ def removeFromPosition_invariant_1_2(type, list_to_modify, position):
     if type == "evaluate":
         return not (0 <= position < len(list_to_modify))
 
-    if type == "getInvalidValid":
+    if type == "getInvalidValues":
         # Basket with single book and position is 9
         return [
             [
@@ -63,19 +64,43 @@ def getFromPosition_invariant_1(list_to_access):
     '''
         list_to_access must be list
     '''
-    return not (isinstance(list_to_access, list) and hasattr(list_to_access, "__len__"))
+    if type == "evaluate":
+        return not (isinstance(list_to_access, list) and hasattr(list_to_access, "__len__"))
+
+    if type == "getInvalidValues":
+        # Basket with single book and position is 9
+        return [
+            [
+                "not a list"
+            ]
+        ]
 
 def getFromPosition_invariant_2(position):
     '''
         position must be int
     '''
-    return not isinstance(position, int)
+    if type == "evaluate":
+        return not isinstance(position, list)
+
+    if type == "getInvalidValues":
+        return [
+            ["test"]
+        ]
 
 def getFromPosition_invariant_1_2(list_to_access, position):
     '''
         position must be within range
     '''
-    return not (0 <= position < len(list_to_access))
+    if type == "evaluate":
+        return not (0 <= position < len(list_to_access))
+
+    if type == "getInvalidValues":
+        # Basket with single book and position is 9
+        return [
+            [
+                [{"name":"book"}], 9
+            ]
+        ]
 
 #==================================
 #   Is Equal
