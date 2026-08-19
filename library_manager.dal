@@ -112,10 +112,10 @@ behavior evaluateChoice {
         p_type="CHOICE", 
         p_role="USER_CHOICE"
     )
-    _isEqual(isAdd, choice, "a")
-    _isEqual(isGet, choice, "g")
-    _isEqual(isDisplay, choice, "d")
     select{
+        _isEqual(isAdd, choice, "a")
+        _isEqual(isGet, choice, "g")
+        _isEqual(isDisplay, choice, "d")
         if (isAdd) {
             goToBehavior(addBookChoice)
         }
