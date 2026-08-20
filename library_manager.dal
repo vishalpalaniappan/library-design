@@ -312,6 +312,17 @@ behavior getName {
     select{
         goToBehavior(createBook)
     }
+
+    # NOTE: 
+    # I just wanted to mention that the design itself can handle empty
+    # book names in a specific way. The design can say, the book must
+    # have a valid name. The invariants simply establish that you
+    # cannot go down the invariant path to the getFirstLetterOfBookName
+    # transformation after accepting a book with no name and it will block
+    # it. Instead, the design can have its own path like I had in the previous
+    # commit. This would be a valid behavior within the design and an empty
+    # book name wouldn't be a semantically invalid input unless it went down
+    # the path leading to the protected behavior.
 }
 
 #=============================
