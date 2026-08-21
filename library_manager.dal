@@ -313,16 +313,17 @@ behavior getName {
         goToBehavior(createBook)
     }
 
-    # NOTE: 
-    # I just wanted to mention that the design itself can handle empty
-    # book names in a specific way. The design can say, the book must
-    # have a valid name. The invariants simply establish that you
-    # cannot go down the invariant path to the getFirstLetterOfBookName
-    # transformation after accepting a book with no name and it will block
-    # it. Instead, the design can have its own path like I had in the previous
-    # commit. This would be a valid behavior within the design and an empty
-    # book name wouldn't be a semantically invalid input unless it went down
-    # the path leading to the protected behavior.
+    # NOTE:
+    # The clean way to do it is to provide a restoring behavior in case of semantic invalidity
+    # and every invariant uses it to recover if violated. In this way, the design is providing
+    # the valid branch to recover and the invariants automatically route it to that path in the
+    # case of semantic invalidity. I'll share more about this in the blog post with diagrams.
+    #
+    # In my previous commit, what I meant was, a book with no name could be meaningful in the
+    # design. It could be part of a different behavioral semantics where the design
+    # is tracking how many books with no name are provided etc. That is different than
+    # the empty book name being semantically invalid because the design intends to read
+    # the first letter of the book name.
 }
 
 #=============================
