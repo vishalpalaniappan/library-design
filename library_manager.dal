@@ -7,6 +7,8 @@ design("library_manager")
 #   that is passed to CLP.
 #}
 
+#TODO: Extend design so it places book on the shelf after reading first letter.
+
 include("registered.py")
 include("computable_units.py")
 
