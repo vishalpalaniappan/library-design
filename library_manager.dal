@@ -78,6 +78,7 @@ behavior acceptChoice {
         is_input=True
     )
     select{
+        # Define behavior if semantically invalid (auto selected by invariant)
         goToBehavior(displayChoice)   
     }
 }
@@ -173,6 +174,7 @@ behavior acceptPosition {
         is_input=True
     )   
     select{
+        # Define behavior if semantically invalid (auto selected by invariant)
         goToBehavior(convertToNumber)
     }
 }
@@ -265,6 +267,7 @@ behavior getBookName {
         is_input=False
     )   
     select{
+        # Define behavior if semantically invalid (auto selected by invariant)
         goToBehavior(getFirstLetterOfBookName)
     }
 }
