@@ -80,8 +80,10 @@ behavior acceptChoice {
         is_input=True
     )
     select{
-        # TODO: Define behavior if semantically invalid (auto selected by invariant)
-        goToBehavior(displayChoice)   
+        goToBehavior(
+            default=displayChoice, 
+            invalid=acceptChoice
+        )   
     }
 }
 
@@ -176,8 +178,10 @@ behavior acceptPosition {
         is_input=True
     )   
     select{
-        # TODO: Define behavior if semantically invalid (auto selected by invariant)
-        goToBehavior(convertToNumber)
+        goToBehavior(
+            default=convertToNumber, 
+            invalid=acceptPosition
+        )   
     }
 }
 
@@ -314,8 +318,10 @@ behavior getName {
         is_input=True
     )
     select{
-        # TODO: Define behavior if semantically invalid (auto selected by invariant)
-        goToBehavior(createBook)
+        goToBehavior(
+            default=createBook, 
+            invalid=getName
+        )   
     }
 }
 
