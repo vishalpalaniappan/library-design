@@ -312,18 +312,6 @@ behavior getName {
     select{
         goToBehavior(createBook)
     }
-
-    # NOTE:
-    # The clean way to do it is to provide a restoring behavior in case of semantic invalidity
-    # and every invariant uses it to recover if violated. In this way, the design is providing
-    # the valid branch to recover and the invariants automatically route it to that path in the
-    # case of semantic invalidity. I'll share more about this in the blog post with diagrams.
-    #
-    # In my previous commit, what I meant was, a book with no name could be meaningful in the
-    # design. It could be part of a different behavioral semantics where the design
-    # is tracking how many books with no name are provided etc. That is different than
-    # the empty book name being semantically invalid because the design intends to read
-    # the first letter of the book name.
 }
 
 #=============================
