@@ -7,6 +7,8 @@ design("library_manager")
 #   that is passed to CLP.
 #}
 
+#TODO: Extend design so it places book on the shelf after reading first letter.
+
 include("registered.py")
 include("computable_units.py")
 
@@ -78,7 +80,7 @@ behavior acceptChoice {
         is_input=True
     )
     select{
-        # Define behavior if semantically invalid (auto selected by invariant)
+        # TODO: Define behavior if semantically invalid (auto selected by invariant)
         goToBehavior(displayChoice)   
     }
 }
@@ -174,7 +176,7 @@ behavior acceptPosition {
         is_input=True
     )   
     select{
-        # Define behavior if semantically invalid (auto selected by invariant)
+        # TODO: Define behavior if semantically invalid (auto selected by invariant)
         goToBehavior(convertToNumber)
     }
 }
@@ -267,7 +269,6 @@ behavior getBookName {
         is_input=False
     )   
     select{
-        # Define behavior if semantically invalid (auto selected by invariant)
         goToBehavior(getFirstLetterOfBookName)
     }
 }
@@ -313,6 +314,7 @@ behavior getName {
         is_input=True
     )
     select{
+        # TODO: Define behavior if semantically invalid (auto selected by invariant)
         goToBehavior(createBook)
     }
 }
