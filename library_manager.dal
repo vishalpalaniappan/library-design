@@ -82,7 +82,7 @@ behavior acceptChoice {
     select{
         goToBehavior(
             default=displayChoice, 
-            invalid=acceptChoice
+            restoring=acceptChoice
         )   
     }
 }
@@ -180,7 +180,7 @@ behavior acceptPosition {
     select{
         goToBehavior(
             default=convertToNumber, 
-            invalid=acceptPosition
+            restoring=acceptPosition
         )   
     }
 }
@@ -320,7 +320,7 @@ behavior getName {
     select{
         goToBehavior(
             default=createBook, 
-            invalid=getName
+            restoring=getName
         )   
     }
 }
