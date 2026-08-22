@@ -177,21 +177,6 @@ def insertIntoList_invariant_2(type, position):
             ]
         ]
 
-def insertIntoList_invariant_1_2(type, list_to_modify, position):
-    '''
-        position must be within insertion range
-    '''
-    if type == "evaluate":
-        return not (0 <= position < len(list_to_modify))
-
-    if type == "getInvalidValues":
-        return [
-            # Basket with single book and position is 9
-            [
-                [{"name":"book"}], 9
-            ]
-        ]
-
 #=====================================
 #      Get Value From Object
 #=====================================
