@@ -44,7 +44,7 @@ def removeFromPosition_invariant_1_2(type, list_to_modify, position):
         position must be within range
     '''
     if type == "evaluate":
-        return not (0 <= position < len(list_to_modify))
+        return not (0 <= abs(position) < len(list_to_modify))
 
     if type == "getInvalidValues":
         # Basket with single book and position is 9
@@ -98,7 +98,7 @@ def getFromPosition_invariant_1_2(type, list_to_access, position):
         position must be within range
     '''
     if type == "evaluate":
-        return not (0 <= position < len(list_to_access))
+        return not (0 <= abs(position) < len(list_to_access))
 
     if type == "getInvalidValues":
         # Basket with single book and position is 9
